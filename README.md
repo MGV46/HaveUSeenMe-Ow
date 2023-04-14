@@ -1,4 +1,4 @@
-# USUARIOS
+# USERS
 ----------------------------------------------------
 dindjarin@gmail.com\
 pedropascal@gmail.com\
