@@ -20,7 +20,7 @@ git remote add origin https://github.com/MGV46/Husmow.git
 ---------------------------------------------------
 Navbar, los contenedores laterales fijos (dyn y bic c)//////
 
-otro bug, subir posts desde perfil(big c)
+otro bug, subir posts desde perfil(big c)/////
 
 otro bug, cambiar datos del perfil del usario(al final)
 
