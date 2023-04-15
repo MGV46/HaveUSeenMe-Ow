@@ -98,8 +98,8 @@ const PostWidget = ({
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
           src={`http://localhost:3001/assets/${attachmentPath}`}
-          href={`http://localhost:3001/assets/${attachmentPath}`}
-          download={"file.pdf"}
+          href={`http://localhost:3001/assets/${attachmentPath}`}// aqui le estoy diciendo a la etiqueta que sera un link, y le digo donde esta lo que dbe de descargar
+          download={"file.pdf"}//esto es para que no se habra un documento pdf, en la misma ventana que la pagina
           target="_blank"
         >download</a>   
       )}
