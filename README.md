@@ -34,7 +34,7 @@ perfil de los perros dentro de los perfiles de usuarios //facil\(big c)
 pag bienvenida(kid carlomagno)
 
 
-docs que se vean\ yo digo q ya no documentos (Big c)
+docs que se vean\ yo digo q ya no documentos (Big c)/////////
 
 
 compartir\(big c)

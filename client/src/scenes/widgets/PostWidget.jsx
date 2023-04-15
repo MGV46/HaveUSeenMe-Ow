@@ -92,13 +92,16 @@ const PostWidget = ({
         />   
       )}
       {attachmentPath && (
-        <document
+        <a
           width="100%"
           height="auto"
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
           src={`http://localhost:3001/assets/${attachmentPath}`}
-        />   
+          href={`http://localhost:3001/assets/${attachmentPath}`}
+          download={"file.pdf"}
+          target="_blank"
+        >download</a>   
       )}
       <FlexBetween mt="0.25rem">
         <FlexBetween gap="1rem">
