@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Navbar from "scenes/navbar";
 
-import MyPostWidget from "scenes/widgets/MyPostWidget";
+
 import PostsWidget from "scenes/widgets/PostsWidget";
 import UserWidgetProfile from "scenes/widgets/UserWidgetProfile";
 
@@ -42,18 +42,14 @@ const ProfilePage = () => {
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined} >
       
           <UserWidgetProfile userId={userId} picturePath={user.picturePath} />
-
-          
-          
-          
-          
+{/*se quito aqui lo de los posts desde el perfil */}
         </Box>
         <Box
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
-          <MyPostWidget picturePath={user.picturePath} />
-          <Box m="2rem 0" />
+          
+          
           <PostsWidget userId={userId} isProfile />
         </Box>
       </Box>
