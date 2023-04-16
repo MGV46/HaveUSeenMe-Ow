@@ -24,9 +24,9 @@ otro bug, subir posts desde perfil(big c)(RESUELTO)
 
 otro bug, cambiar datos del perfil del usario(al final)
 
-orden de los posts\(falta)
+orden de los posts\(DIN)
 
-posts mejorados(dyn)
+posts mejorados(BIG C)
 
 perfil de los perros dentro de los perfiles de usuarios //facil\(big c)
 
@@ -34,25 +34,28 @@ perfil de los perros dentro de los perfiles de usuarios //facil\(big c)
 pag bienvenida(kid carlomagno)
 
 
-docs que se vean\ yo digo q ya no documentos (Big c)(RESUELTO)
+docs que se vean\ (Big c)(RESUELTO)
 
 
 compartir\(big c)
 
 
+Follow instead of friends request(DIN)
+
+
 search\(dyn)
 
-https://www.youtube.com/watch?v=HggSXt1Hzfk&t=620s  /// chat\(todos)
+https://www.youtube.com/watch?v=HggSXt1Hzfk&t=620s  /// chat\(Din)
 
 verificacion correos 2A(si hay tiempo)
 
 location /post\(si hay tiempo)
 
-friends request error\(kid carlomagno)
+
 
 comentarios subir comentarios\(kid carlomagno)
 
-IA fotos\(dyn)
+IA photos\(dyn)
 
 
 
