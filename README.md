@@ -18,9 +18,9 @@ git remote add origin https://github.com/MGV46/Husmow.git
 
 # CAMBIAR:
 ---------------------------------------------------
-Navbar, los contenedores laterales fijos (dyn y bic c)//////
+Navbar, los contenedores laterales fijos (dyn y bic c)(RESUELTO)
 
-otro bug, subir posts desde perfil(big c)/////
+otro bug, subir posts desde perfil(big c)(RESUELTO)
 
 otro bug, cambiar datos del perfil del usario(al final)
 
@@ -34,7 +34,7 @@ perfil de los perros dentro de los perfiles de usuarios //facil\(big c)
 pag bienvenida(kid carlomagno)
 
 
-docs que se vean\ yo digo q ya no documentos (Big c)/////////
+docs que se vean\ yo digo q ya no documentos (Big c)(RESUELTO)
 
 
 compartir\(big c)
