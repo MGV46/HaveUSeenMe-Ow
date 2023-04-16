@@ -8,7 +8,7 @@ const WidgetWrapper = styled(Box)(({ theme }) => ({// aqui estamos diciendo que 
   backgroundColor: theme.palette.background.alt,//color del contenedor
   borderRadius: "1rem",// este se refiere al radio de los bordes del contenedor
   top:"128px",//margen hacia arriba para el bloque de la informacion y amigos de la pagina de perfil del usuario
-  height: "40rem",//dependiendo de la resolucion de la pantalla el alto de esta etiqueta variara, esto es importante para el scroll, sino este no tendria scroll
+  height: "36rem",//dependiendo de la resolucion de la pantalla el alto de esta etiqueta variara, esto es importante para el scroll, sino este no tendria scroll
   overflow: "auto",//scroll automatico, osea en el eje en que se necesite el scroll habra el mismo
   
 }));
