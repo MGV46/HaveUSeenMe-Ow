@@ -71,6 +71,11 @@ const MyPostWidget = ({ picturePath }) => {
       body: formData,
     });
     const posts = await response.json();
+    dispatch(setPosts({ post: posts.sort((p1, p2) => {
+      return new Date(p2.createdAt) - new Date(p1.createdAt);
+    }) }));
+
+
     dispatch(setPosts({ posts }));
     setImage(null);
     setVideo(null);
