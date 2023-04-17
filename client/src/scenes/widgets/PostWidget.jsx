@@ -50,6 +50,7 @@ const PostWidget = ({
     dispatch(setPost({ post: updatedPost }));
   };
 
+  
   return (
     <WidgetWrapper m="1rem 0">
       <Friend
