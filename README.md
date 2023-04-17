@@ -24,7 +24,7 @@ otro bug, subir posts desde perfil(big c)(RESUELTO)
 
 otro bug, cambiar datos del perfil del usario(al final)
 
-orden de los posts\(DIN)
+orden de los posts\(DIN) (HECHO)
 
 posts mejorados(BIG C)
 
