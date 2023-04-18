@@ -13,7 +13,7 @@ joelmiller@gmail.com
 
 # GITHUB SETUP
 ----------------------------------------------------
-git remote add origin https://github.com/MGV46/Husmow.git
+git remote add origin https://github.com/MGV46/HaveUSeenMe-Ow.git
 ----------------------------------------------------
 
 # CAMBIAR:
