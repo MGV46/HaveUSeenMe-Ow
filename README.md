@@ -43,7 +43,7 @@ compartir\(big c)
 Follow instead of friends request(DIN)
 
 
-search\(dyn)
+search\/(dyn)
 
 https://www.youtube.com/watch?v=HggSXt1Hzfk&t=620s  /// chat\(Din)
 
