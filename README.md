@@ -31,7 +31,7 @@ posts mejorados(BIG C)
 perfil de los perros dentro de los perfiles de usuarios //facil\(big c)
 
 
-pag bienvenida(kid carlomagno)
+pag bienvenida(kid carlomagno)(RESUELTO)
 
 
 docs que se vean\ (Big c)(RESUELTO)
