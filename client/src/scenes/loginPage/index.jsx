@@ -6,6 +6,7 @@ const LoginPage = () => {
   const theme = useTheme();
   
   return (
+    
     <Box
       display="flex"
       justifyContent="center"
@@ -36,16 +37,18 @@ const LoginPage = () => {
 
         <Typography
           fontSize={{ xs: "3vw", sm: "2vw", md: "1.5vw", lg: "1.2vw" }}
-          fontFamily="'Lato', sans-serif"
+          fontFamily="'Source Sans Pro', sans-serif"
           color={theme.palette.common.white}
           mb="2rem"
           maxWidth="80%"
         >
           Husmow is a website that provides a platform to help pet owners find their lost pets quickly and easily. With a user-friendly interface, you can create a profile for your lost pet with detailed information, such as breed, age, and location. This information is then shared with other users in the area who can help keep an eye out for your beloved pet.
         </Typography>
-
+        
       </Box>
+      
       <Box
+      
         display="flex"
         flexDirection="column"
         alignItems="center"
@@ -65,8 +68,11 @@ const LoginPage = () => {
         >
           <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
             Husmow
+            
           </Link>
+          
         </Typography>
+        
         <Typography
           fontWeight="500"
           variant="h5"
@@ -77,11 +83,28 @@ const LoginPage = () => {
           textAlign="center"
           maxWidth="80%"
         >
-          Welcome to Husmow, the Facebook for pets!
+          Welcome to Husmow, here you could find your lost buddy!
+          
         </Typography>
+        
         <Form />
+        <Box display="flex" justifyContent="center">
+          <Link to="/about" style={{ textDecoration: "none" }}>
+            <Typography
+              variant="h6"
+              fontFamily="'Open Sans', sans-serif"
+              color={theme.palette.text.primary}
+              textAlign="center"
+            >
+              About Us
+            </Typography>
+          </Link>
+        </Box>
+
       </Box>
+      
     </Box>
+    
   );
 };
 
