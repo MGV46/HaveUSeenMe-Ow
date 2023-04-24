@@ -2,7 +2,6 @@ import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setPets ,setLoginPet} from "state";
-import {setPet} from "state/auxiliar.js";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';

@@ -12,7 +12,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
-
+import { useParams } from "react-router-dom";
 
 const PostWidget = ({
   postId,
@@ -37,9 +37,11 @@ const PostWidget = ({
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
+  const { userId } = useParams();
   const userLog = useSelector((state) => state.userLogin);
   let isLog=userLog._id!=postUserId;
-  console.log(isLog);
+  let isReg=userId!=postUserId;
+  
   const patchLike = async () => {
     const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
       method: "PATCH",
@@ -56,7 +58,7 @@ const PostWidget = ({
   
   return (
     <WidgetWrapper m="1rem 0">
-      {isLog?(<Friend
+      {(isLog && isReg)?(<Friend
           friendId={postUserId}
           name={name}
           subtitle={location}

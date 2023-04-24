@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import MyPostPetWidget from "scenes/widgets/MyPostPetWidget";
 import PetWidgetProfile from "scenes/widgets/PetWidgetProfile";
 import Navbar from "scenes/navbar";
-import {getPet} from "state/auxiliar.js";
 
 import PostsPetsWidget from "scenes/widgets/PostsPetsWidget";
 //import PetWidgetProfile from "scenes/widgets/PetWidgetProfile";
