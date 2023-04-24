@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Navbar from "scenes/navbar";
-
+import MyPostWidget from "scenes/widgets/MyPostWidget";
 
 import PostsWidget from "scenes/widgets/PostsWidget";
 import UserWidgetProfile from "scenes/widgets/UserWidgetProfile";
@@ -49,7 +49,7 @@ const ProfilePage = () => {
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
           
-          
+          <MyPostWidget picturePath={user.picturePath} />
           <PostsWidget userId={userId} isProfile />
         </Box>
         <Box flexBasis="26%">

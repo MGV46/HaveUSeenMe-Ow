@@ -82,7 +82,7 @@ const MyPostWidget = ({ picturePath }) => {
     setAttachment(null);
     setAudio(null);
     setPost("");
-    
+    window.location.reload();
   };
 
   return (
