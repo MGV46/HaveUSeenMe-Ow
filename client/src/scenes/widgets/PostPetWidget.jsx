@@ -7,12 +7,12 @@ import {
   import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
   import FlexBetween from "components/FlexBetween";
   import Friend from "components/Friend";
+  import User from "components/User";
   import WidgetWrapper from "components/WidgetWrapper";
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setPost } from "state";
-
-  
+ 
   const PostPetWidget = ({
     postId,
     postPetId,
@@ -33,17 +33,27 @@ import {
     const { palette } = useTheme();
     const main = palette.neutral.main;
     const primary = palette.primary.main;
-  
+   const userLog = useSelector((state) => state.userLogin);
+  let isLog=userLog._id!=postUserId;
+  console.log(isLog);
   
     
     return (
       <WidgetWrapper m="1rem 0">
-        <Friend
+        {isLog?(<Friend
           friendId={postUserId}
           name={name}
           subtitle={location}
           userPicturePath={userPicturePath}
-        />
+        />):(<User
+          friendId={postUserId}
+          name={name}
+          subtitle={location}
+          userPicturePath={userPicturePath}
+        />)
+
+        }
+        
         <Typography color={main} sx={{ mt: "1rem" }}>
           {description}
         </Typography>

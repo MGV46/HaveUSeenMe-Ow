@@ -69,16 +69,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
       </FlexBetween>
       
       
-      <IconButton
-      onClick={() => patchFriend()}
-      sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
-    >
-      {isFriend ? (
-        <GroupRemoveIcon sx={{ color: primaryDark }} />
-      ) : (
-        <GroupAddIcon sx={{ color: primaryDark }} />
-      )}
-    </IconButton>
+    
      
       
     </FlexBetween>
