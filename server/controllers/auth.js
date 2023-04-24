@@ -15,6 +15,7 @@ export const register = async (req, res) => {
       audioPath,
       attachmentPath,
       friends,
+      pets,
       location,
       occupation,
     } = req.body;
@@ -32,6 +33,7 @@ export const register = async (req, res) => {
       audioPath,
       attachmentPath,
       friends,
+      pets,
       location,
       occupation,
       viewedProfile: Math.floor(Math.random() * 20),

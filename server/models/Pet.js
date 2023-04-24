@@ -2,29 +2,47 @@ import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
   {
-    firstName: {
+    userId: {
+        type: String,
+        required: true,
+        
+      },
+    pName: {
       type: String,
       required: true,
       min: 2,
       max: 50,
     },
-    lastName: {
+    specie: {
       type: String,
       required: true,
       min: 2,
       max: 50,
     },
-    email: {
+    breed: {
       type: String,
       required: true,
+      min: 2,
       max: 50,
-      unique: true,
+      
     },
-    password: {
+    gender: {
       type: String,
       required: true,
-      min: 5,
+      min: 2,
+      max: 50,
     },
+    color: {
+        type: String,
+        required: true,
+        min: 2,
+        max: 50,
+      },
+      age: {
+        type: Number,
+        required: true,
+        
+      },
     picturePath: {
       type: String,
       default: "",
@@ -41,21 +59,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    friends: {
-      type: Array,
-      default: [],
-    },
-    pets: {
-      type: Array,
-      default: [],
-    },
-    location: String,
-    occupation: String,
-    viewedProfile: Number,
-    impressions: Number,
+    
   },
   { timestamps: true }
 );
 
-const User = mongoose.model("User", UserSchema);
-export default User;
+const Pet = mongoose.model("Pet", UserSchema);
+export default Pet;

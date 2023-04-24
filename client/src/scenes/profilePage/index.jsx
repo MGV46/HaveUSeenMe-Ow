@@ -7,7 +7,7 @@ import Navbar from "scenes/navbar";
 
 import PostsWidget from "scenes/widgets/PostsWidget";
 import UserWidgetProfile from "scenes/widgets/UserWidgetProfile";
-
+import PetListWidget from "scenes/widgets/PetListWidget";
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const { userId } = useParams();
@@ -52,7 +52,14 @@ const ProfilePage = () => {
           
           <PostsWidget userId={userId} isProfile />
         </Box>
+        <Box flexBasis="26%">
+        <PetListWidget userId={userId} />
+        </Box>
+        
+        
       </Box>
+      
+            
     </Box>
   );
 };
