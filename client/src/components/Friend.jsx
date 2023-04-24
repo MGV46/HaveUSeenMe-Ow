@@ -16,7 +16,17 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const friends = useSelector((state) => state.user.friends);
   const userLogin =useSelector((state)=> state.userLogin);
   const isFriend = friends.find((friend) => friend._id === friendId);
+  let isfri=true,d=true;
+    for(let i=0;i<userLogin.friends.length;i++){
+      if(userLogin.friends[i]==friendId){
+        isfri=false;
+       
+      }
+    }
+    
+  
   console.log("hdfhahdfsahfd: "+friendId);
+  console.log("nothings gonna: "+userLogin._id);
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
   const primaryDark = palette.primary.dark;
@@ -68,19 +78,23 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
           </Typography>
         </Box>
       </FlexBetween>
-      
-      
+      {friendId!=userLogin._id ?
+      (
       <IconButton
       onClick={() => patchFriend()}
       sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
     >
-      {isFriend ? (
-        <GroupRemoveIcon sx={{ color: primaryDark }} />
-      ) : (
+      {isfri ? (
         <GroupAddIcon sx={{ color: primaryDark }} />
+        
+      ) : (
+        <GroupRemoveIcon sx={{ color: primaryDark }} />
       )}
     </IconButton>
-     
+      ):(
+        <Box color= {palette.primary.light}  >YOU</Box>
+      )
+     }
       
     </FlexBetween>
   );
