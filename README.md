@@ -28,7 +28,7 @@ orden de los posts\(DIN) (HECHO)
 
 posts mejorados(BIG C)
 
-perfil de los perros dentro de los perfiles de usuarios //facil\(big c)
+perfil de los perros dentro de los perfiles de usuarios //\(big c)(HECHO)
 
 
 pag bienvenida(kid carlomagno)(RESUELTO) (HECHO)
