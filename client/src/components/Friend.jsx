@@ -72,9 +72,9 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
         sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
       >
         {isFriend ? (
-          <GroupAddIcon sx={{ color: primaryDark }} />
-        ) : (
           <GroupRemoveIcon sx={{ color: primaryDark }} />
+        ) : (
+          <GroupAddIcon sx={{ color: primaryDark }} />
         )}
       </IconButton>
     </FlexBetween>

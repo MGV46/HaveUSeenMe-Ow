@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
+import AboutUsPage from "scenes/AboutUsPage";
+
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -33,6 +35,8 @@ function App() {
               path="/profilePet/:petId"
               element={isAuth ? <ProfilePagePet /> : <Navigate to="/" />}
             />
+            <Route exact path="/about" element={<AboutUsPage />} />
+
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

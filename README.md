@@ -13,7 +13,7 @@ joelmiller@gmail.com
 
 # GITHUB SETUP
 ----------------------------------------------------
-git remote add origin https://github.com/MGV46/Husmow.git
+git remote add origin https://github.com/MGV46/HaveUSeenMe-Ow.git
 ----------------------------------------------------
 
 # CAMBIAR:
@@ -31,7 +31,7 @@ posts mejorados(BIG C)
 perfil de los perros dentro de los perfiles de usuarios //facil\(big c)
 
 
-pag bienvenida(kid carlomagno)
+pag bienvenida(kid carlomagno)(RESUELTO) (HECHO)
 
 
 docs que se vean\ (Big c)(RESUELTO)
@@ -40,7 +40,7 @@ docs que se vean\ (Big c)(RESUELTO)
 compartir\(big c)
 
 
-Follow instead of friends request(DIN)
+Follow instead of friends request(DIN) (HECHO)
 
 
 search\/(dyn)
