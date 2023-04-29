@@ -25,8 +25,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
     }
     
   
-  console.log("hdfhahdfsahfd: "+friendId);
-  console.log("nothings gonna: "+userLogin._id);
+  
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
   const primaryDark = palette.primary.dark;

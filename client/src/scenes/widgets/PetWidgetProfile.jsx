@@ -24,6 +24,7 @@ const UserWidget = ({ petIds, ppicturePath }) => {
   const main = palette.neutral.main;
   const users = useSelector((state) => state.user);
   const petsId  = useSelector((state)=> state.pet);
+
   let pName,specie,breed,gender,color,age,picturePath,petId;
   for(let i=0;i<petsId.length;i++){
     if(petsId[i]!=null){

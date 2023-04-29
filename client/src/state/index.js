@@ -9,6 +9,8 @@ const initialState = {
   token: null,
   tokenP:null,
   posts: [],
+  post:null,
+  comments:[],
   postsPets:[],
 };
 
@@ -27,6 +29,9 @@ export const authSlice = createSlice({
     setLoginPet: (state, action) => {
       state.pet = action.payload.pet;
       
+    },
+    setUserPost:(state,action)=>{
+      state.post =action.payload.post;
     },
     setLogout: (state) => {
       state.userLogin = null;
@@ -63,6 +68,16 @@ export const authSlice = createSlice({
       });
       state.posts = updatedPosts;
     },
+    setComment: (state, action) => {
+      const updatedComments = state.comments.map((comment) => {
+        if (comment._id === action.payload.comment._id) return action.payload.comment;
+        return comment;
+      });
+      state.comments = updatedComments;
+    },
+    setComments: (state, action) => {
+      state.comments = action.payload.comments;
+    },
     setPostsPets: (state, action) => {
       state.postsPets = action.payload.postsPets;
     },
@@ -76,6 +91,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setMode, setLogin,setLoginPet, setLogout,setLogoutPet, setFriends, setPosts,setPets,setPet, setPost,setPostsPets,setPostPets } =
+export const { setMode, setLogin,setLoginPet,setUserPost, setLogout,setLogoutPet, setFriends, setPosts,setPets,setPet, setPost,setComment,setComments,setPostsPets,setPostPets } =
   authSlice.actions;
 export default authSlice.reducer;

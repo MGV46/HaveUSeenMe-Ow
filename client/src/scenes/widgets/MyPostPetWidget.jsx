@@ -29,10 +29,10 @@ import {
     const dispatch = useDispatch();
     const [isImage, setIsImage] = useState(false);
     const [isVideo, setIsVideo] = useState(false);
-    const [image, setImage] = useState(null);
-    const [video, setVideo] = useState(null);
+    const [image, setImage] = useState([]);
+    const [video, setVideo] = useState([]);
     const [isAttachment, setIsAttachment] = useState(false);
-    const [attachment, setAttachment] = useState(null);
+    const [attachment, setAttachment] = useState([]);
     const [isAudio, setIsAudio] = useState(false);
     const [audio, setAudio] = useState(null);
     const [postPets, setPostPets] = useState("");
@@ -59,21 +59,33 @@ import {
       formData.append("userId", _id);
       formData.append("description", postPets);
       if (image) {
-        formData.append("picture", image);
-        formData.append("picturePath", image.name);
+     
+        image.map((image)=>(
+  
+          formData.append("picture", image),
+          formData.append("picturePath", image.name)
+          ))
+        
       }
       if (video) {
-        formData.append("picture", video);
-        formData.append("videoPath", video.name);
+        video.map((video)=>(
+  
+       
+          formData.append("picture", video),
+          formData.append("videoPath", video.name)
+          ))
+        
       }
       if (attachment) {
-        formData.append("picture", attachment);
-        formData.append("attachmentPath", attachment.name);
+        attachment.map((attachment)=>(
+  
+       
+          formData.append("picture", attachment),
+          formData.append("attachmentPath", attachment.name)
+          ))
+        
       }
-      if (audio) {
-        formData.append("picture", audio);
-        formData.append("audioPath", audio.name);
-      }
+      
   
       const response = await fetch(`http://localhost:3001/postsPets`, {
         method: "POST",
@@ -120,8 +132,8 @@ import {
           >
             <Dropzone
               acceptedFiles=".jpg,.jpeg,.png"
-              multiple={false}
-              onDrop={(acceptedFiles) => setImage(acceptedFiles[0])}
+              multiple={true}
+              onDrop={(acceptedFiles) => setImage(acceptedFiles)}
             >
               {({ getRootProps, getInputProps }) => (
                 <FlexBetween>
@@ -136,10 +148,14 @@ import {
                     {!image ? (
                       <p>Add Image Here</p>
                     ) : (
-                      <FlexBetween>
-                        <Typography>{image.name}</Typography>
-                        <EditOutlined />
-                      </FlexBetween>
+                      image.map((image)=>(
+                      
+                    
+                        <FlexBetween>
+                          <Typography>{image.name}</Typography>
+                          <EditOutlined />
+                        </FlexBetween>
+                        ))
                     )}
                   </Box>
                   {image && (
@@ -166,8 +182,8 @@ import {
           >
             <Dropzone
               acceptedFiles=".mkv,.mp4"
-              multiple={false}
-              onDrop={(acceptedFiles) => setVideo(acceptedFiles[0])}
+              multiple={true}
+              onDrop={(acceptedFiles) => setVideo(acceptedFiles)}
             >
               {({ getRootProps, getInputProps }) => (
                 <FlexBetween>
@@ -182,10 +198,12 @@ import {
                     {!video ? (
                       <p>Add video Here</p>
                     ) : (
-                      <FlexBetween>
-                        <Typography>{video.name}</Typography>
-                        <EditOutlined />
-                      </FlexBetween>
+                      video.map((video)=>(
+                        <FlexBetween>
+                          <Typography>{video.name}</Typography>
+                          <EditOutlined />
+                        </FlexBetween>
+                        ))
                     )}
                   </Box>
                   {video && (
@@ -211,8 +229,8 @@ import {
           >
             <Dropzone
               acceptedFiles=".pdf,.docx"
-              multiple={false}
-              onDrop={(acceptedFiles) => setAttachment(acceptedFiles[0])}
+              multiple={true}
+              onDrop={(acceptedFiles) => setAttachment(acceptedFiles)}
             >
               {({ getRootProps, getInputProps }) => (
                 <FlexBetween>
@@ -227,10 +245,12 @@ import {
                     {!attachment ? (
                       <p>Add attach Here</p>
                     ) : (
-                      <FlexBetween>
-                        <Typography>{attachment.name}</Typography>
-                        <EditOutlined />
-                      </FlexBetween>
+                      attachment.map((attachment)=>(
+                        <FlexBetween>
+                          <Typography>{attachment.name}</Typography>
+                          <EditOutlined />
+                        </FlexBetween>
+                        ))
                     )}
                   </Box>
                   {attachment && (
@@ -247,50 +267,7 @@ import {
           </Box>
         )}
               
-        {isAudio && (
-          <Box
-            border={`1px solid ${medium}`}
-            borderRadius="5px"
-            mt="1rem"
-            p="1rem"
-          >
-            <Dropzone
-              acceptedFiles=".mp3"
-              multiple={false}
-              onDrop={(acceptedFiles) => setAudio(acceptedFiles[0])}
-            >
-              {({ getRootProps, getInputProps }) => (
-                <FlexBetween>
-                  <Box
-                    {...getRootProps()}
-                    border={`2px dashed ${palette.primary.main}`}
-                    p="1rem"
-                    width="100%"
-                    sx={{ "&:hover": { cursor: "pointer" } }}
-                  >
-                    <input {...getInputProps()} />
-                    {!audio ? (
-                      <p>Add your Audio Here</p>
-                    ) : (
-                      <FlexBetween>
-                        <Typography>{audio.name}</Typography>
-                        <EditOutlined />
-                      </FlexBetween>
-                    )}
-                  </Box>
-                  {audio && (
-                    <IconButton
-                      onClick={() => setAudio(null)}
-                      sx={{ width: "15%" }}
-                    >
-                      <DeleteOutlined />
-                    </IconButton>
-                  )}
-                </FlexBetween>
-              )}
-            </Dropzone>
-          </Box>
-        )}
+        
   
         <Divider sx={{ margin: "1.25rem 0" }} />
   
@@ -315,15 +292,7 @@ import {
             </Typography>
           </FlexBetween>
           
-          <FlexBetween gap="0.25rem" onClick={() => setIsAudio(!isAudio)}>
-            <MicOutlined sx={{ color: mediumMain }} />
-            <Typography
-              color={mediumMain}
-              sx={{ "&:hover": { cursor: "pointer", color: medium } }}
-            >
-              Audio
-            </Typography>
-          </FlexBetween>
+          
           <FlexBetween gap="0.25rem" onClick={() => setIsAttachment(!isAttachment)}>
             <AttachFileOutlined sx={{ color: mediumMain }} />
             <Typography

@@ -7,13 +7,15 @@ import {
 import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
+import Comment from "components/Comment";
 import User from "components/User";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPost } from "state";
+import { setPost,setUserPost } from "state";
 import { useParams } from "react-router-dom";
-
+import MyCommentWidget from "scenes/widgets/MyCommentWidget";
+import CommentsWidget from "scenes/widgets/CommentsWidget";
 const PostWidget = ({
   postId,
   postUserId,
@@ -41,7 +43,18 @@ const PostWidget = ({
   const userLog = useSelector((state) => state.userLogin);
   let isLog=userLog._id!=postUserId;
   let isReg=userId!=postUserId;
+  const posts= useSelector((state)=>state.posts);
+  let isVideoPath=false,isPicturePath=false,isAudioPath=false,isAttachment=false;
+  if(videoPath.length>0){
+    isVideoPath=true;
+  }
+  if(picturePath.length>0){
+    isPicturePath=true;
+  }
   
+  if(attachmentPath.length>0){
+    isAttachment=true;
+  }
   const patchLike = async () => {
     const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
       method: "PATCH",
@@ -54,7 +67,22 @@ const PostWidget = ({
     const updatedPost = await response.json();
     dispatch(setPost({ post: updatedPost }));
   };
-
+  const Selection =()=>{
+  let f;
+  const postId1 = posts.map((post) => {
+    if (post._id === postId) {
+      f=post._id;
+      
+      return post;
+      
+    }
+    
+  });
+    dispatch(setUserPost({ post: postId1 }));
+   
+    
+  }
+  
   
   return (
     <WidgetWrapper m="1rem 0">
@@ -74,7 +102,33 @@ const PostWidget = ({
       <Typography color={main} sx={{ mt: "1rem" }}>
         {description}
       </Typography>
-      {videoPath && (
+      {isAttachment && (
+        <a
+          width="100%"
+          height="auto"
+          alt="post"
+          style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
+          
+          href={`http://localhost:3001/assets/${attachmentPath}`}// aqui le estoy diciendo a la etiqueta que sera un link, y le digo donde esta lo que dbe de descargar
+          download={"file.pdf"}//esto es para que no se habra un documento pdf, en la misma ventana que la pagina
+          target="_blank"
+          
+          >{attachmentPath}<br></br></a>   
+      )}
+      {isPicturePath && (
+        picturePath.map((picture)=>(
+          <img
+          width="100%"
+          height="auto"
+          alt="post"
+          style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
+          src={`http://localhost:3001/assets/${picture}`}
+        /> 
+
+        ))
+          
+      )}
+      {isVideoPath && (
         <video
           width="100%"
           height="auto"
@@ -84,55 +138,34 @@ const PostWidget = ({
           controls
         />   
       )}
-      {picturePath && (
-        <img
-          width="100%"
-          height="auto"
-          alt="post"
-          style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`http://localhost:3001/assets/${picturePath}`}
-        />   
-      )}
-      {audioPath && (
-        <audio
-          width="100%"
-          height="auto"
-          alt="post"
-          style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`http://localhost:3001/assets/${audioPath}`}
-          controls
-        />   
-      )}
-      {attachmentPath && (
-        <a
-          width="100%"
-          height="auto"
-          alt="post"
-          style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`http://localhost:3001/assets/${attachmentPath}`}
-          href={`http://localhost:3001/assets/${attachmentPath}`}// aqui le estoy diciendo a la etiqueta que sera un link, y le digo donde esta lo que dbe de descargar
-          download={"file.pdf"}//esto es para que no se habra un documento pdf, en la misma ventana que la pagina
-          target="_blank"
-        >{attachmentPath}</a>   
-      )}
+      
+      
       <FlexBetween mt="0.25rem">
         <FlexBetween gap="1rem">
           <FlexBetween gap="0.3rem">
             <IconButton onClick={patchLike}>
-              {isLiked ? (
+             
+             {isLiked ? (
                 <FavoriteOutlined sx={{ color: primary }} />
               ) : (
                 <FavoriteBorderOutlined />
               )}
+             
             </IconButton>
-            <Typography>{likeCount}</Typography>
+          <Typography>{likeCount}</Typography>
           </FlexBetween>
 
           <FlexBetween gap="0.3rem">
-            <IconButton onClick={() => setIsComments(!isComments)}>
-              <ChatBubbleOutlineOutlined />
+            <IconButton onClick={
+             Selection()}>
+              <ChatBubbleOutlineOutlined  onClick={
+               
+               ()=>setIsComments(!isComments) 
+             
+               } 
+               />
             </IconButton>
-            <Typography>{comments.length}</Typography>
+           
           </FlexBetween>
         </FlexBetween>
 
@@ -140,19 +173,24 @@ const PostWidget = ({
           <ShareOutlined />
         </IconButton>
       </FlexBetween>
-      {isComments && (
+     
         <Box mt="0.5rem">
-          {comments.map((comment, i) => (
-            <Box key={`${name}-${i}`}>
+          
+          {isComments &&
+            <Box >
               <Divider />
               <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-                {comment}
+               <CommentsWidget commentId={comments} posteId= {postId}/>
+              <Divider />
+          <MyCommentWidget picturePath={userLog.picturePath} postId={postId}/>
               </Typography>
             </Box>
-          ))}
-          <Divider />
+          }
+            
+          
+          
         </Box>
-      )}
+      
     </WidgetWrapper>
   );
 };

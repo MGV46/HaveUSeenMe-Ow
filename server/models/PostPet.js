@@ -20,10 +20,22 @@ const postSchema = mongoose.Schema(
     },
     location: String,
     description: String,
-    picturePath: String,
-    videoPath: String,
-    audioPath: String,
-    attachmentPath: String,
+    picturePath: {
+      type: Array,
+      default: [],
+    },
+    videoPath: {
+      type: Array,
+      default: [],
+    },
+    audioPath:{
+      type: Array,
+      default: [],
+    },
+    attachmentPath:{
+      type: Array,
+      default: [],
+    },
     userPicturePath: String,
     
   },
