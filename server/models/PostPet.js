@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const postSchema = mongoose.Schema(
   {
+    petId: {
+        type: String,
+        required: true,
+      },
     userId: {
       type: String,
       required: true,
@@ -24,27 +28,20 @@ const postSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
-    audioPath: {
+    audioPath:{
       type: Array,
       default: [],
     },
-    attachmentPath: {
+    attachmentPath:{
       type: Array,
       default: [],
     },
     userPicturePath: String,
-    likes: {
-      type: Map,
-      of: Boolean,
-    },
-    comments: {
-      type: Array,
-      default: [],
-    },
+    
   },
   { timestamps: true }
 );
 
-const Post = mongoose.model("Post", postSchema);
+const PostPet = mongoose.model("PostPet", postSchema);
 
-export default Post;
+export default PostPet;

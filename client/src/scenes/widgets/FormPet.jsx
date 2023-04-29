@@ -11,104 +11,109 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLogin } from "state";
+import { setPets} from "state";
 import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
 
 const registerSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  password: yup.string().required("required"),
-  location: yup.string().required("required"),
-  occupation: yup.string().required("required"),
+  pName: yup.string().required("required"),
+  specie: yup.string().required("required"),
+  breed: yup.string().required("required"),
+  gender: yup.string().required("required"),
+  color: yup.string().required("required"),
+  age: yup.number().required("required"),
   picture: yup.string().required("required"),
 });
 
-const loginSchema = yup.object().shape({
-  email: yup.string().email("invalid email").required("required"),
-  password: yup.string().required("required"),
-});
+
 
 const initialValuesRegister = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  location: "",
-  occupation: "",
+  pName: "",
+  specie: "",
+  breed: "",
+  gender: "",
+  color: "",
+  age: "",
   picture: "",
 };
 
-const initialValuesLogin = {
-  email: "",
-  password: "",
-};
+
 
 const Form = () => {
-  const [pageType, setPageType] = useState("login");
+  const [pageType, setPageType] = useState("register");
   const { palette } = useTheme();
+
   const dispatch = useDispatch();
+    const  _id  = useSelector((state) => state.user);
+    const token = useSelector((state) => state.token);
+    const pets = useSelector((state) => state.pets);
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const isLogin = pageType === "login";
+  
   const isRegister = pageType === "register";
+  const patchPets = async () => {
+    
+    const response = await fetch(
+      `http://localhost:3001/pets/${pets._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    dispatch(setPets({ pets: data }));
+  };
+
 
   const register = async (values, onSubmitProps) => {
     // this allows us to send form info with image
     const formData = new FormData();
+    
+    formData.append("picturePath", values.picture.name);
+    console.log("user friends non-existent :(");
     for (let value in values) {
       formData.append(value, values[value]);
     }
-    formData.append("picturePath", values.picture.name);
+    formData.append("userId", _id._id);
+    console.log(_id);
+    
+    console.log(values.picture.name);
+    
 
     const savedUserResponse = await fetch(
-      "http://localhost:3001/auth/register",
+      "http://localhost:3001/authP/registerPet",
       {
         method: "POST",
         body: formData,
       }
     );
-    const savedUser = await savedUserResponse.json();
+    const savedPet = await savedUserResponse.json();
     onSubmitProps.resetForm();
 
-    if (savedUser) {
-      setPageType("login");
+    if (savedPet) {
+      navigate(`/profile/${_id._id}`);
+      window.location.reload();
+
     }
   };
 
-  const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
-    const loggedIn = await loggedInResponse.json();
-    onSubmitProps.resetForm();
-    if (loggedIn) {
-      dispatch(
-        setLogin({
-          userLogin: loggedIn.user,
-          user: loggedIn.user,
-          token: loggedIn.token,
-        })
-      );
-   
-      navigate("/home");
-    }
-  };
+  
 
   const handleFormSubmit = async (values, onSubmitProps) => {
-    if (isLogin) await login(values, onSubmitProps);
+    
     if (isRegister) await register(values, onSubmitProps);
   };
 
   return (
     <Formik
       onSubmit={handleFormSubmit}
-      initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
-      validationSchema={isLogin ? loginSchema : registerSchema}
+      initialValues={initialValuesRegister}
+      validationSchema={registerSchema}
     >
       {({
         values,
@@ -132,56 +137,54 @@ const Form = () => {
             {isRegister && (
               <>
                 <TextField
-                  label="First Name"
+                  label="Name"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.firstName}
-                  name="firstName"
+                  value={values.pName}
+                  name="pName"
                   error={
-                    Boolean(touched.firstName) && Boolean(errors.firstName)
+                    Boolean(touched.pName) && Boolean(errors.pName)
                   }
-                  helperText={touched.firstName && errors.firstName}
+                  helperText={touched.pName && errors.pName}
                   sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
-                  label="Last Name"
+                  label="Specie"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.lastName}
-                  name="lastName"
-                  error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                  helperText={touched.lastName && errors.lastName}
+                  value={values.specie}
+                  name="specie"
+                  error={Boolean(touched.specie) && Boolean(errors.specie)}
+                  helperText={touched.specie && errors.specie}
                   sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
-                  label="Location"
+                  label="Breed"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.location}
-                  name="location"
-                  error={Boolean(touched.location) && Boolean(errors.location)}
-                  helperText={touched.location && errors.location}
+                  value={values.breed}
+                  name="breed"
+                  error={Boolean(touched.breed) && Boolean(errors.breed)}
+                  helperText={touched.breed && errors.breed}
                   sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
-                  label="Occupation"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.occupation}
-                  name="occupation"
-                  error={
-                    Boolean(touched.occupation) && Boolean(errors.occupation)
-                  }
-                  helperText={touched.occupation && errors.occupation}
-                  sx={{ gridColumn: "span 4" }}
-                />
+              label="Gender"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.gender}
+              name="gender"
+              error={Boolean(touched.gender) && Boolean(errors.gender)}
+              helperText={touched.gender && errors.gender}
+              sx={{ gridColumn: "span 4" }}
+            />
                 <Box
                   gridColumn="span 4"
                   border={`1px solid ${palette.neutral.medium}`}
                   borderRadius="5px"
                   p="1rem"
                 >
-                  <Dropzone
+                 <Dropzone
                     acceptedFiles=".jpg,.jpeg,.png"
                     multiple={false}
                     onDrop={(acceptedFiles) =>
@@ -212,24 +215,24 @@ const Form = () => {
             )}
 
             <TextField
-              label="Email"
+              label="Color"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.email}
-              name="email"
-              error={Boolean(touched.email) && Boolean(errors.email)}
-              helperText={touched.email && errors.email}
+              value={values.color}
+              name="color"
+              error={Boolean(touched.color) && Boolean(errors.color)}
+              helperText={touched.color && errors.color}
               sx={{ gridColumn: "span 4" }}
             />
             <TextField
-              label="Password"
-              type="password"
+              label="Age"
+              
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.password}
-              name="password"
-              error={Boolean(touched.password) && Boolean(errors.password)}
-              helperText={touched.password && errors.password}
+              value={values.age}
+              name="age"
+              error={Boolean(touched.age) && Boolean(errors.ag)}
+              helperText={touched.age && errors.age}
               sx={{ gridColumn: "span 4" }}
             />
           </Box>
@@ -237,6 +240,13 @@ const Form = () => {
           {/* BUTTONS */}
           <Box>
             <Button
+             onClick={() => {
+             
+              
+              register();
+              patchPets();
+              
+            }}
               fullWidth
               type="submit"
               sx={{
@@ -247,26 +257,8 @@ const Form = () => {
                 "&:hover": { color: palette.primary.main },
               }}
             >
-              {isLogin ? "LOGIN" : "REGISTER"}
+             <Typography color={"white"}>Register</Typography>
             </Button>
-            <Typography
-              onClick={() => {
-                setPageType(isLogin ? "register" : "login");
-                resetForm();
-              }}
-              sx={{
-                textDecoration: "underline",
-                color: palette.primary.main,
-                "&:hover": {
-                  cursor: "pointer",
-                  color: palette.primary.light,
-                },
-              }}
-            >
-              {isLogin
-                ? "Don't have an account? Sign Up here."
-                : "Already have an account? Login here."}
-            </Typography>
             
           </Box>
         </form>

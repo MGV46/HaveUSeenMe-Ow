@@ -28,7 +28,7 @@ orden de los posts\(DIN) (HECHO)
 
 posts mejorados(BIG C)
 
-perfil de los perros dentro de los perfiles de usuarios //facil\(big c)
+perfil de los perros dentro de los perfiles de usuarios //\(big c)(HECHO)
 
 
 pag bienvenida(kid carlomagno)(RESUELTO) (HECHO)
@@ -50,8 +50,7 @@ https://www.youtube.com/watch?v=HggSXt1Hzfk&t=620s  /// chat\(Din)
 verificacion correos 2A(si hay tiempo)
 
 location /post\(si hay tiempo)
-
-
+hay algunas funcione que se deben de agregar como el edit de perfiles, borrado de los mismos, y borrar posts pero piesno que eso se hara despues del 12(big c)
 
 comentarios subir comentarios\(kid carlomagno)
 

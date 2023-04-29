@@ -21,7 +21,8 @@ import {
     const dark = palette.neutral.dark;
     const medium = palette.neutral.medium;
     const main = palette.neutral.main;
-  
+    const userLogin=useSelector((state)=>state.userLogin);
+    let isLog=userLogin._id==userId;
     const getUser = async () => {
       const response = await fetch(`http://localhost:3001/users/${userId}`, {
         method: "GET",
@@ -80,7 +81,10 @@ import {
               <Typography color={medium}>{friends.length} friends</Typography>
             </Box>
           </FlexBetween>
+          {isLog &&
           <ManageAccountsOutlined />
+          }
+          
         </FlexBetween>
   
         <Divider />

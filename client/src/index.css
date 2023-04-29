@@ -15,3 +15,8 @@ body,
   background: #7b12b0;
   border-radius: 1rem;
 }
+.form::-webkit-scrollbar{
+
+  height: "36rem";
+  overflow: "auto";
+}
