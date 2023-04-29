@@ -3,6 +3,7 @@ import {
   FavoriteBorderOutlined,
   FavoriteOutlined,
   ShareOutlined,
+  DeleteOutlined
 } from "@mui/icons-material";
 import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
@@ -55,7 +56,25 @@ const PostWidget = ({
     dispatch(setPost({ post: updatedPost }));
   };
 
+  const deletePost = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/posts/${postId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
   
+      const deletedPost = await response.json();
+  
+      // Dispatch an action to update the state with the deleted post
+      dispatch(setPost({ post: deletedPost }));
+    } catch (error) {
+      console.error(error);
+    }
+    window.location.reload();
+  };
+
   return (
     <WidgetWrapper m="1rem 0">
       {(isLog && isReg)?(<Friend
@@ -139,6 +158,11 @@ const PostWidget = ({
         <IconButton zIndex="1">
           <ShareOutlined />
         </IconButton>
+
+        <IconButton onClick={deletePost}>
+          <DeleteOutlined />
+        </IconButton>
+
       </FlexBetween>
       {isComments && (
         <Box mt="0.5rem">
