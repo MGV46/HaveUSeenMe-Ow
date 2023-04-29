@@ -14,10 +14,12 @@ import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import postPetRoutes from "./routes/postsPets.js";
 import petRoutes from "./routes/pets.js";
+import commentRoutes from "./routes/comments.js";
 import { register} from "./controllers/auth.js";
 import { registerPet } from "./controllers/authP.js";
 import { createPost } from "./controllers/posts.js";
 import { createPostPet } from "./controllers/postsPets.js";
+import { createComment} from "./controllers/comments.js";
 import { verifyToken } from "./middleware/auth.js";
 
 /* CONFIGURATIONS */
@@ -44,12 +46,22 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
-
+/* FILE STORAGE */
+const storage1 = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/assets");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+const uploadMore = multer({ storage1 });
 /* ROUTES WITH FILES */
 app.post("/authP/registerPet", upload.single("picture"), registerPet);
 app.post("/auth/register", upload.single("picture"), register);
-app.post("/posts", verifyToken, upload.single("picture"), createPost);
-app.post("/postsPets", verifyToken, upload.single("picture"), createPostPet);
+app.post("/posts", verifyToken, uploadMore.array("picture"), createPost);
+app.post("/postsPets", verifyToken, upload.array("picture"), createPostPet);
+app.post("/comments", verifyToken, upload.single("picture"), createComment);
 /* ROUTES */
 app.use("/auth", authRoutes);
 
@@ -57,6 +69,7 @@ app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/postsPets", postPetRoutes);
 app.use("/pets", petRoutes);
+app.use("/comments",commentRoutes);
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
 mongoose.set('strictQuery', false);
