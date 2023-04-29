@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import HomePage from "scenes/homePage";
 import LoginPage from "scenes/loginPage";
 import ProfilePage from "scenes/profilePage";
+import ProfilePagePet from "scenes/profilePagePet";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -29,6 +30,10 @@ function App() {
             <Route
               path="/profile/:userId"
               element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
+            />
+             <Route
+              path="/profilePet/:petId"
+              element={isAuth ? <ProfilePagePet /> : <Navigate to="/" />}
             />
             <Route exact path="/about" element={<AboutUsPage />} />
 

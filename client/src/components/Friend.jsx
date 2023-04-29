@@ -14,17 +14,24 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
+  const userLogin =useSelector((state)=> state.userLogin);
+  const isFriend = friends.find((friend) => friend._id === friendId);
+  let isfri=true,d=true;
+    for(let i=0;i<userLogin.friends.length;i++){
+      if(userLogin.friends[i]==friendId){
+        isfri=false;
+       
+      }
+    }
+    
   
-
+  
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
   const primaryDark = palette.primary.dark;
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
-
-  const isFriend = friends.find((friend) => friend._id === friendId);
- 
-
+  
   const patchFriend = async () => {
     const response = await fetch(
       `http://localhost:3001/users/${_id}/${friendId}`,
@@ -36,6 +43,9 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
         },
       }
     );
+    
+  
+   
     const data = await response.json();
     dispatch(setFriends({ friends: data }));
   };
@@ -67,16 +77,24 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
           </Typography>
         </Box>
       </FlexBetween>
+      {friendId!=userLogin._id ?
+      (
       <IconButton
-        onClick={() => patchFriend()}
-        sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
-      >
-        {isFriend ? (
-          <GroupRemoveIcon sx={{ color: primaryDark }} />
-        ) : (
-          <GroupAddIcon sx={{ color: primaryDark }} />
-        )}
-      </IconButton>
+      onClick={() => patchFriend()}
+      sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
+    >
+      {isfri ? (
+        <GroupAddIcon sx={{ color: primaryDark }} />
+        
+      ) : (
+        <GroupRemoveIcon sx={{ color: primaryDark }} />
+      )}
+    </IconButton>
+      ):(
+        <Box color= {palette.primary.light}  >YOU</Box>
+      )
+     }
+      
     </FlexBetween>
   );
 };
