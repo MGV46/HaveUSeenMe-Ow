@@ -72,6 +72,7 @@ app.use("/pets", petRoutes);
 app.use("/comments",commentRoutes);
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
+mongoose.set('strictQuery', false);
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
