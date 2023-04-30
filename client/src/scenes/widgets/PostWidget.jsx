@@ -8,7 +8,6 @@ import {
 import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
-import Comment from "components/Comment";
 import User from "components/User";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
@@ -17,6 +16,7 @@ import { setPost,setUserPost } from "state";
 import { useParams } from "react-router-dom";
 import MyCommentWidget from "scenes/widgets/MyCommentWidget";
 import CommentsWidget from "scenes/widgets/CommentsWidget";
+
 const PostWidget = ({
   postId,
   postUserId,
@@ -46,6 +46,8 @@ const PostWidget = ({
   let isReg=userId!=postUserId;
   const posts= useSelector((state)=>state.posts);
   let isVideoPath=false,isPicturePath=false,isAudioPath=false,isAttachment=false;
+  const isOwner = postUserId === loggedInUserId;//Add isOwner, so the button just appears to the owner 
+
   if(videoPath.length>0){
     isVideoPath=true;
   }
@@ -68,17 +70,6 @@ const PostWidget = ({
     const updatedPost = await response.json();
     dispatch(setPost({ post: updatedPost }));
   };
-<<<<<<< HEAD
-
-  const deletePost = async () => {
-    try {
-      const response = await fetch(`http://localhost:3001/posts/${postId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-=======
   const Selection =()=>{
   let f;
   const postId1 = posts.map((post) => {
@@ -86,19 +77,20 @@ const PostWidget = ({
       f=post._id;
       
       return post;
-      
     }
     
   });
     dispatch(setUserPost({ post: postId1 }));
-   
-    
   }
-  
->>>>>>> c7b73f68485121704f8187a7cb6e2634971a91f7
-  
+  const deletePost = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const deletedPost = await response.json();
-  
       // Dispatch an action to update the state with the deleted post
       dispatch(setPost({ post: deletedPost }));
     } catch (error) {
@@ -107,6 +99,7 @@ const PostWidget = ({
     window.location.reload();
   };
 
+  
   return (
     <WidgetWrapper m="1rem 0">
       {(isLog && isReg)?(<Friend
@@ -122,10 +115,12 @@ const PostWidget = ({
         />)
 
         }
+      
       <Typography color={main} sx={{ mt: "1rem" }}>
         {description}
       </Typography>
       {isAttachment && (
+        attachmentPath.map((attachmentPath)=>(
         <a
           width="100%"
           height="auto"
@@ -137,6 +132,7 @@ const PostWidget = ({
           target="_blank"
           
           >{attachmentPath}<br></br></a>   
+        ))
       )}
       {isPicturePath && (
         picturePath.map((picture)=>(
@@ -147,11 +143,14 @@ const PostWidget = ({
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
           src={`http://localhost:3001/assets/${picture}`}
         /> 
-
-        ))
           
+        ))
+
+        
       )}
+      
       {isVideoPath && (
+        videoPath.map((videoPath)=>(
         <video
           width="100%"
           height="auto"
@@ -159,7 +158,7 @@ const PostWidget = ({
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
           src={`http://localhost:3001/assets/${videoPath}`}
           controls
-        />   
+        />   ))
       )}
       
       
@@ -190,16 +189,16 @@ const PostWidget = ({
             </IconButton>
            
           </FlexBetween>
+          {isOwner && (
+            <IconButton onClick={() => deletePost(true)}>
+              <DeleteOutlined />
+            </IconButton>
+          )}
         </FlexBetween>
 
         <IconButton zIndex="1">
           <ShareOutlined />
         </IconButton>
-
-        <IconButton onClick={deletePost}>
-          <DeleteOutlined />
-        </IconButton>
-
       </FlexBetween>
      
         <Box mt="0.5rem">
