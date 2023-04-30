@@ -56,11 +56,11 @@ comentarios subir comentarios\(kid carlomagno)
 
 IA photos\(dyn)
 
-Para la presentacion 12
-Corregir fotos en los post,
-Bug de subir algo seleccionado que no esta ahi
-Ia Animales
-Comentarios Bugs
+Para la presentacion 12\n
+Corregir fotos en los post \n
+Bug de subir algo seleccionado que no esta ahi \n
+Ia Animales \n
+Comentarios Bugs \n
 
 
 
