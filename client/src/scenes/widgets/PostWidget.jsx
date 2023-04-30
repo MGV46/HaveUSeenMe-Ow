@@ -3,11 +3,11 @@ import {
   FavoriteBorderOutlined,
   FavoriteOutlined,
   ShareOutlined,
+  DeleteOutlined
 } from "@mui/icons-material";
 import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
-import Comment from "components/Comment";
 import User from "components/User";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
@@ -16,6 +16,7 @@ import { setPost,setUserPost } from "state";
 import { useParams } from "react-router-dom";
 import MyCommentWidget from "scenes/widgets/MyCommentWidget";
 import CommentsWidget from "scenes/widgets/CommentsWidget";
+
 const PostWidget = ({
   postId,
   postUserId,
@@ -45,6 +46,8 @@ const PostWidget = ({
   let isReg=userId!=postUserId;
   const posts= useSelector((state)=>state.posts);
   let isVideoPath=false,isPicturePath=false,isAudioPath=false,isAttachment=false;
+  const isOwner = postUserId === loggedInUserId;//Add isOwner, so the button just appears to the owner 
+
   if(videoPath.length>0){
     isVideoPath=true;
   }
@@ -74,15 +77,28 @@ const PostWidget = ({
       f=post._id;
       
       return post;
-      
     }
     
   });
     dispatch(setUserPost({ post: postId1 }));
-   
-    
   }
-  
+  const deletePost = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const deletedPost = await response.json();
+      // Dispatch an action to update the state with the deleted post
+      dispatch(setPost({ post: deletedPost }));
+    } catch (error) {
+      console.error(error);
+    }
+    window.location.reload();
+  };
+
   
   return (
     <WidgetWrapper m="1rem 0">
@@ -99,10 +115,12 @@ const PostWidget = ({
         />)
 
         }
+      
       <Typography color={main} sx={{ mt: "1rem" }}>
         {description}
       </Typography>
       {isAttachment && (
+        attachmentPath.map((attachmentPath)=>(
         <a
           width="100%"
           height="auto"
@@ -114,6 +132,7 @@ const PostWidget = ({
           target="_blank"
           
           >{attachmentPath}<br></br></a>   
+        ))
       )}
       {isPicturePath && (
         picturePath.map((picture)=>(
@@ -124,11 +143,14 @@ const PostWidget = ({
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
           src={`http://localhost:3001/assets/${picture}`}
         /> 
-
-        ))
           
+        ))
+
+        
       )}
+      
       {isVideoPath && (
+        videoPath.map((videoPath)=>(
         <video
           width="100%"
           height="auto"
@@ -136,7 +158,7 @@ const PostWidget = ({
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
           src={`http://localhost:3001/assets/${videoPath}`}
           controls
-        />   
+        />   ))
       )}
       
       
@@ -167,6 +189,11 @@ const PostWidget = ({
             </IconButton>
            
           </FlexBetween>
+          {isOwner && (
+            <IconButton onClick={() => deletePost(true)}>
+              <DeleteOutlined />
+            </IconButton>
+          )}
         </FlexBetween>
 
         <IconButton zIndex="1">
