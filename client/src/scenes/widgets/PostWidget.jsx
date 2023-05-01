@@ -25,7 +25,6 @@ const PostWidget = ({
   location,
   picturePath,
   videoPath,
-  audioPath,
   attachmentPath,
   userPicturePath,
   likes,
@@ -46,6 +45,7 @@ const PostWidget = ({
   let isReg=userId!=postUserId;
   const posts= useSelector((state)=>state.posts);
   let isVideoPath=false,isPicturePath=false,isAudioPath=false,isAttachment=false;
+  
   const isOwner = postUserId === loggedInUserId;//Add isOwner, so the button just appears to the owner 
 
   if(videoPath.length>0){
@@ -207,15 +207,13 @@ const PostWidget = ({
             <Box >
               <Divider />
               <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-               <CommentsWidget commentId={comments} posteId= {postId}/>
+               <CommentsWidget commentId={comments} postId= {postId}/>
               <Divider />
           <MyCommentWidget picturePath={userLog.picturePath} postId={postId}/>
               </Typography>
             </Box>
           }
             
-          
-          
         </Box>
       
     </WidgetWrapper>

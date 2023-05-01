@@ -9,7 +9,9 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 import AboutUsPage from "scenes/AboutUsPage";
-
+import TermsPage from "scenes/TermsPage";
+import HelpPage from "scenes/HelpPage";
+import ContactUsPage from "scenes/ContactUsPage";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -36,6 +38,9 @@ function App() {
               element={isAuth ? <ProfilePagePet /> : <Navigate to="/" />}
             />
             <Route exact path="/about" element={<AboutUsPage />} />
+            <Route exact path="/terms" element={<TermsPage />} />
+            <Route exact path="/help" element={<HelpPage />} />
+            <Route exact path="/contact" element={<ContactUsPage />} />
 
           </Routes>
         </ThemeProvider>
