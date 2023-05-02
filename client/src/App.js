@@ -9,7 +9,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 import AboutUsPage from "scenes/AboutUsPage";
-
+import Messenger from "scenes/messenger/Messenger";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -31,11 +31,14 @@ function App() {
               path="/profile/:userId"
               element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
             />
-             <Route
+            <Route
               path="/profilePet/:petId"
               element={isAuth ? <ProfilePagePet /> : <Navigate to="/" />}
             />
             <Route exact path="/about" element={<AboutUsPage />} />
+            <Route path="/messenger"
+              element={isAuth ? <Messenger/> : <Navigate to="/" />} />
+
 
           </Routes>
         </ThemeProvider>

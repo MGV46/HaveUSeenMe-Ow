@@ -16,6 +16,7 @@ import { setPost,setUserPost } from "state";
 import { useParams } from "react-router-dom";
 import MyCommentWidget from "scenes/widgets/MyCommentWidget";
 import CommentsWidget from "scenes/widgets/CommentsWidget";
+import { format } from "timeago.js";
 
 const PostWidget = ({
   postId,
@@ -30,6 +31,7 @@ const PostWidget = ({
   userPicturePath,
   likes,
   comments,
+  createdAt,
 }) => {
   const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
@@ -47,6 +49,7 @@ const PostWidget = ({
   const posts= useSelector((state)=>state.posts);
   let isVideoPath=false,isPicturePath=false,isAudioPath=false,isAttachment=false;
   const isOwner = postUserId === loggedInUserId;//Add isOwner, so the button just appears to the owner 
+  const timePosts = format(createdAt);
 
   if(videoPath.length>0){
     isVideoPath=true;
@@ -106,11 +109,13 @@ const PostWidget = ({
           friendId={postUserId}
           name={name}
           subtitle={location}
+          subtitle2={timePosts}
           userPicturePath={userPicturePath}
         />):(<User
           friendId={postUserId}
           name={name}
           subtitle={location}
+          subtitle2={timePosts}
           userPicturePath={userPicturePath}
         />)
 

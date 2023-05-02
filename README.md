@@ -42,10 +42,11 @@ compartir\(big c)
 
 Follow instead of friends request(DIN) (HECHO)
 
+tiempo "hace cuanto se publico" de los posts(DIN) (HECHO)
 
 search\/(dyn)
 
-https://www.youtube.com/watch?v=HggSXt1Hzfk&t=620s  /// chat\(Din)
+chat\(Din) (Hecho)
 
 verificacion correos 2A(si hay tiempo)
 

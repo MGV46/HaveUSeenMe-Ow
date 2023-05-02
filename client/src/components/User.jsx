@@ -8,7 +8,7 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import GroupRemoveIcon from '@mui/icons-material/GroupRemove';
 
 
-const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
+const Friend = ({ friendId, name, subtitle, subtitle2, userPicturePath }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { _id } = useSelector((state) => state.user);
@@ -64,6 +64,9 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
           </Typography> 
           <Typography color={medium} fontSize="0.75rem">
             {subtitle}
+          </Typography>
+          <Typography color={medium} fontSize="0.75rem">
+            {subtitle2}
           </Typography>
         </Box>
       </FlexBetween>

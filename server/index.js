@@ -21,6 +21,11 @@ import { createPost } from "./controllers/posts.js";
 import { createPostPet } from "./controllers/postsPets.js";
 import { createComment} from "./controllers/comments.js";
 import { verifyToken } from "./middleware/auth.js";
+import conversationRoute from "./routes/conversations.js";
+import messageRoute from "./routes/messages.js";
+import { createConversation } from "./controllers/conversation.js";
+
+
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -62,6 +67,7 @@ app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, uploadMore.array("picture"), createPost);
 app.post("/postsPets", verifyToken, upload.array("picture"), createPostPet);
 app.post("/comments", verifyToken, upload.single("picture"), createComment);
+app.post("/conversations", verifyToken, upload.single("picture"), createConversation);
 /* ROUTES */
 app.use("/auth", authRoutes);
 
@@ -70,6 +76,10 @@ app.use("/posts", postRoutes);
 app.use("/postsPets", postPetRoutes);
 app.use("/pets", petRoutes);
 app.use("/comments",commentRoutes);
+app.use("/conversations", conversationRoute);
+app.use("/messages", messageRoute);
+
+
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
 mongoose.set('strictQuery', false);

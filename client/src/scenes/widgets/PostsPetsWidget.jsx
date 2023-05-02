@@ -55,6 +55,7 @@ const petId  = useSelector((state)=> state.pet);
           audioPath,
           attachmentPath,
           userPicturePath,
+          createdAt,
           
         }) => (
           <PostPetWidget
@@ -70,6 +71,7 @@ const petId  = useSelector((state)=> state.pet);
             audioPath={audioPath}
             attachmentPath={attachmentPath}
             userPicturePath={userPicturePath}
+            createdAt={createdAt}
         
           />
         )

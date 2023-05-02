@@ -40,9 +40,9 @@ const Navbar = () => {
   const alt = theme.palette.background.alt;
 
   const fullName = `${user.firstName} ${user.lastName}`;
- // const fullName = `${"dummy"} ${"name"}`;
+  // const fullName = `${"dummy"} ${"name"}`;
   return (
-    <FlexBetween padding="1rem 6%" backgroundColor={alt} position="sticky"  top="0px" zIndex="2">
+    <FlexBetween padding="1rem 6%" backgroundColor={alt} position="sticky" top="0px" zIndex="2">
       <FlexBetween gap="1.75rem">
         <Typography
           fontWeight="bold"
@@ -83,11 +83,17 @@ const Navbar = () => {
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
           </IconButton>
-          <Message sx={{ fontSize: "25px" }} />
+          <IconButton onClick={() => navigate("/messenger")}>
+            {theme.palette.mode === "dark" ? (
+              <Message sx={{ fontSize: "25px" }} />
+            ) : (
+              <Message sx={{ color: dark, fontSize: "25px" }} />
+            )}
+          </IconButton>
           <Notifications sx={{ fontSize: "25px" }} />
           <Help sx={{ fontSize: "25px" }} />
           <FormControl variant="standard" value={fullName}  >
-            <Select 
+            <Select
               value={fullName}
               sx={{
                 backgroundColor: neutralLight,
