@@ -41,6 +41,9 @@ const postSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
+    verificate: {
+      type: Boolean,
+    },
   },
   { timestamps: true }
 );

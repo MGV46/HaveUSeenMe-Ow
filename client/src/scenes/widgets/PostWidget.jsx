@@ -3,7 +3,9 @@ import {
   FavoriteBorderOutlined,
   FavoriteOutlined,
   ShareOutlined,
+  Verified,
 } from "@mui/icons-material";
+import VerifiedIcon from '@mui/icons-material/Verified';
 import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
@@ -16,6 +18,7 @@ import { setPost,setUserPost } from "state";
 import { useParams } from "react-router-dom";
 import MyCommentWidget from "scenes/widgets/MyCommentWidget";
 import CommentsWidget from "scenes/widgets/CommentsWidget";
+
 const PostWidget = ({
   postId,
   postUserId,
@@ -29,6 +32,7 @@ const PostWidget = ({
   userPicturePath,
   likes,
   comments,
+  verificate,
 }) => {
   const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
@@ -86,23 +90,33 @@ const PostWidget = ({
   
   return (
     <WidgetWrapper m="1rem 0">
-      {(isLog && isReg)?(<Friend
+<Box style={{ display: "flex", alignItems: "center" }}>
+{(isLog && isReg)?(<Friend 
           friendId={postUserId}
           name={name}
           subtitle={location}
           userPicturePath={userPicturePath}
+          
         />):(<User
           friendId={postUserId}
           name={name}
           subtitle={location}
           userPicturePath={userPicturePath}
+          
         />)
 
         }
+{
+  verificate && (
+    <VerifiedIcon color={main}/>  )
+}
+</Box>
+      
       <Typography color={main} sx={{ mt: "1rem" }}>
         {description}
       </Typography>
       {isAttachment && (
+        attachmentPath.map((attachmentPath)=>(
         <a
           width="100%"
           height="auto"
@@ -114,6 +128,7 @@ const PostWidget = ({
           target="_blank"
           
           >{attachmentPath}<br></br></a>   
+        ))
       )}
       {isPicturePath && (
         picturePath.map((picture)=>(
@@ -124,11 +139,14 @@ const PostWidget = ({
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
           src={`http://localhost:3001/assets/${picture}`}
         /> 
-
-        ))
           
+        ))
+
+        
       )}
+     
       {isVideoPath && (
+        videoPath.map((videoPath)=>(
         <video
           width="100%"
           height="auto"
@@ -136,7 +154,7 @@ const PostWidget = ({
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
           src={`http://localhost:3001/assets/${videoPath}`}
           controls
-        />   
+        />   ))
       )}
       
       

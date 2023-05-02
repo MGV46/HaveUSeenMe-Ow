@@ -24,7 +24,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
-
+import { predecir } from "./predict";
 const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
   const [isImage, setIsImage] = useState(false);
@@ -42,16 +42,37 @@ const MyPostWidget = ({ picturePath }) => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const mediumMain = palette.neutral.mediumMain;
   const medium = palette.neutral.medium;
-
+  
 
   const handlePost = async () => {
     const formData = new FormData();
     formData.append("userId", _id);
     formData.append("description", post);
+    let cant=image.length,i=0,ver=true;
     if (image) {
+     const isVerificade = image.map((image)=>{
+      if(predecir(image)){
+        i++;
+      }
+      if(i==cant){
+        return true;
+      }else{
+        return false;
+      }
+     }
+      
+     )
+     console.log(isVerificade)
+    for(i=0;i<isVerificade.length;i++){
+      if(!isVerificade[i]){
+       ver=false;
+      }
+    }
+    console.log(ver);
+      formData.append("verificate",ver);
      
       image.map((image)=>(
-
+        
         formData.append("picture", image),
         formData.append("picturePath", image.name)
         ))
@@ -94,7 +115,7 @@ const MyPostWidget = ({ picturePath }) => {
     setAttachment(null);
     setAudio(null);
     setPost("");
-   window.location.reload();
+  // window.location.reload();
   };
 
   return (
@@ -264,31 +285,34 @@ const MyPostWidget = ({ picturePath }) => {
 
       <FlexBetween>
         <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
-          <ImageOutlined sx={{ color: mediumMain }} />
+          <ImageOutlined sx={{ color: mediumMain }} onClick={() => setImage(null)}/>
           <Typography
             color={mediumMain}
             sx={{ "&:hover": { cursor: "pointer", color: medium } }}
+            onClick={() => setImage(null)}
           >
             Image
           </Typography>
         </FlexBetween>
         
-        <FlexBetween gap="0.25rem" onClick={() => setIsVideo(!isVideo)}>
-          <OndemandVideoIcon sx={{ color: mediumMain }} />
+        <FlexBetween gap="0.25rem" onClick={() => setIsVideo(!isVideo)}  >
+          <OndemandVideoIcon sx={{ color: mediumMain }} onClick={() => setVideo(null)}/>
           <Typography
             color={mediumMain}
             sx={{ "&:hover": { cursor: "pointer", color: medium } }}
+            onClick={() => setVideo(null)}
           >
             Video
           </Typography>
         </FlexBetween>
         
         
-        <FlexBetween gap="0.25rem" onClick={() => setIsAttachment(!isAttachment)}>
-          <AttachFileOutlined sx={{ color: mediumMain }} />
+        <FlexBetween gap="0.25rem" onClick={() => setIsAttachment(!isAttachment)}  >
+          <AttachFileOutlined sx={{ color: mediumMain }} onClick={() => setAttachment(null)}/>
           <Typography
             color={mediumMain}
             sx={{ "&:hover": { cursor: "pointer", color: medium } }}
+            onClick={() => setAttachment(null)}
           >
             Attachment
           </Typography>

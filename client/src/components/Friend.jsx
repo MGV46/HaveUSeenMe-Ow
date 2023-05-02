@@ -50,7 +50,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
     dispatch(setFriends({ friends: data }));
   };
   return (
-    <FlexBetween>
+    <FlexBetween style={{ marginRight: "1rem" }}>
       <FlexBetween gap="1rem">
         <UserImage image={userPicturePath} size="55px" />
         <Box

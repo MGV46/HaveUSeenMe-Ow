@@ -13,7 +13,7 @@ import {
   import { useEffect, useState } from "react";
   import { useNavigate } from "react-router-dom";
   import FriendListWidget from "./FriendListWidget";
-  const UserWidget = ({ userId, picturePath }) => {
+  const UserWidgetProfile = ({ userId, picturePath }) => {
     const [user, setUser] = useState(null);
     const { palette } = useTheme();
     const navigate = useNavigate();
@@ -164,5 +164,5 @@ import {
     );
   };
   
-  export default UserWidget;
+  export default UserWidgetProfile;
   

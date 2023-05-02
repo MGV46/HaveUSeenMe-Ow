@@ -46,20 +46,11 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
-/* FILE STORAGE */
-const storage1 = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/assets");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-const uploadMore = multer({ storage1 });
+
 /* ROUTES WITH FILES */
 app.post("/authP/registerPet", upload.single("picture"), registerPet);
 app.post("/auth/register", upload.single("picture"), register);
-app.post("/posts", verifyToken, uploadMore.array("picture"), createPost);
+app.post("/posts", verifyToken, upload.array("picture"), createPost);
 app.post("/postsPets", verifyToken, upload.array("picture"), createPostPet);
 app.post("/comments", verifyToken, upload.single("picture"), createComment);
 /* ROUTES */
