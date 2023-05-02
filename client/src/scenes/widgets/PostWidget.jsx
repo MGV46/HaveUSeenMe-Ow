@@ -4,12 +4,12 @@ import {
   FavoriteOutlined,
   ShareOutlined,
   Verified,
+  DeleteOutlined
 } from "@mui/icons-material";
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
-import Comment from "components/Comment";
 import User from "components/User";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
@@ -18,6 +18,7 @@ import { setPost,setUserPost } from "state";
 import { useParams } from "react-router-dom";
 import MyCommentWidget from "scenes/widgets/MyCommentWidget";
 import CommentsWidget from "scenes/widgets/CommentsWidget";
+import { format } from "timeago.js";
 
 const PostWidget = ({
   postId,
@@ -27,12 +28,12 @@ const PostWidget = ({
   location,
   picturePath,
   videoPath,
-  audioPath,
   attachmentPath,
   userPicturePath,
   likes,
   comments,
   verificate,
+  createdAt,
 }) => {
   const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
@@ -49,6 +50,10 @@ const PostWidget = ({
   let isReg=userId!=postUserId;
   const posts= useSelector((state)=>state.posts);
   let isVideoPath=false,isPicturePath=false,isAudioPath=false,isAttachment=false;
+  
+  const isOwner = postUserId === loggedInUserId;//Add isOwner, so the button just appears to the owner 
+  const timePosts = format(createdAt);
+
   if(videoPath.length>0){
     isVideoPath=true;
   }
@@ -78,15 +83,28 @@ const PostWidget = ({
       f=post._id;
       
       return post;
-      
     }
     
   });
     dispatch(setUserPost({ post: postId1 }));
-   
-    
   }
-  
+  const deletePost = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const deletedPost = await response.json();
+      // Dispatch an action to update the state with the deleted post
+      dispatch(setPost({ post: deletedPost }));
+    } catch (error) {
+      console.error(error);
+    }
+    window.location.reload();
+  };
+
   
   return (
     <WidgetWrapper m="1rem 0">
@@ -95,12 +113,14 @@ const PostWidget = ({
           friendId={postUserId}
           name={name}
           subtitle={location}
+          subtitle2={timePosts}
           userPicturePath={userPicturePath}
           
         />):(<User
           friendId={postUserId}
           name={name}
           subtitle={location}
+          subtitle2={timePosts}
           userPicturePath={userPicturePath}
           
         />)
@@ -145,6 +165,7 @@ const PostWidget = ({
         
       )}
      
+      
       {isVideoPath && (
         videoPath.map((videoPath)=>(
         <video
@@ -185,6 +206,11 @@ const PostWidget = ({
             </IconButton>
            
           </FlexBetween>
+          {isOwner && (
+            <IconButton onClick={() => deletePost(true)}>
+              <DeleteOutlined />
+            </IconButton>
+          )}
         </FlexBetween>
 
         <IconButton zIndex="1">
@@ -198,15 +224,13 @@ const PostWidget = ({
             <Box >
               <Divider />
               <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-               <CommentsWidget commentId={comments} posteId= {postId}/>
+               <CommentsWidget commentId={comments} postId= {postId}/>
               <Divider />
           <MyCommentWidget picturePath={userLog.picturePath} postId={postId}/>
               </Typography>
             </Box>
           }
             
-          
-          
         </Box>
       
     </WidgetWrapper>

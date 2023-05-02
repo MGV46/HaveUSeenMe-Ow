@@ -12,6 +12,7 @@ import {
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setPost } from "state";
+  import { format } from "timeago.js";
  
   const PostPetWidget = ({
     postId,
@@ -25,11 +26,12 @@ import {
     audioPath,
     attachmentPath,
     userPicturePath,
+    createdAt,
     
   }) => {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
-
+    const timePosts = format(createdAt);
     const { palette } = useTheme();
     const main = palette.neutral.main;
     const primary = palette.primary.main;
@@ -54,11 +56,13 @@ import {
           friendId={postUserId}
           name={name}
           subtitle={location}
+          subtitle2={timePosts}
           userPicturePath={userPicturePath}
         />):(<User
           friendId={postUserId}
           name={name}
           subtitle={location}
+          subtitle2={timePosts}
           userPicturePath={userPicturePath}
         />)
 

@@ -42,10 +42,11 @@ compartir\(big c)
 
 Follow instead of friends request(DIN) (HECHO)
 
+tiempo "hace cuanto se publico" de los posts(DIN) (HECHO)
 
 search\/(dyn)
 
-https://www.youtube.com/watch?v=HggSXt1Hzfk&t=620s  /// chat\(Din)
+chat\(Din) (Hecho)
 
 verificacion correos 2A(si hay tiempo)
 
@@ -55,6 +56,12 @@ hay algunas funcione que se deben de agregar como el edit de perfiles, borrado d
 comentarios subir comentarios\(kid carlomagno)
 
 IA photos\(dyn)
+
+Para la presentacion 12\n
+Corregir fotos en los post \n
+Bug de subir algo seleccionado que no esta ahi \n
+Ia Animales \n
+Comentarios Bugs \n
 
 
 
