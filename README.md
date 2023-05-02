@@ -57,6 +57,12 @@ comentarios subir comentarios\(kid carlomagno)
 
 IA photos\(dyn)
 
+Para la presentacion 12\n
+Corregir fotos en los post \n
+Bug de subir algo seleccionado que no esta ahi \n
+Ia Animales \n
+Comentarios Bugs \n
+
 
 
 metodo de pago si hay tiempo xxdxdxdxdxd

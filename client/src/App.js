@@ -9,7 +9,13 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 import AboutUsPage from "scenes/AboutUsPage";
+<<<<<<< HEAD
 import Messenger from "scenes/messenger/Messenger";
+=======
+import TermsPage from "scenes/TermsPage";
+import HelpPage from "scenes/HelpPage";
+import ContactUsPage from "scenes/ContactUsPage";
+>>>>>>> c10531a67792ba33a9aab85f4ac2497511404f1a
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -36,9 +42,15 @@ function App() {
               element={isAuth ? <ProfilePagePet /> : <Navigate to="/" />}
             />
             <Route exact path="/about" element={<AboutUsPage />} />
+<<<<<<< HEAD
             <Route path="/messenger"
               element={isAuth ? <Messenger/> : <Navigate to="/" />} />
 
+=======
+            <Route exact path="/terms" element={<TermsPage />} />
+            <Route exact path="/help" element={<HelpPage />} />
+            <Route exact path="/contact" element={<ContactUsPage />} />
+>>>>>>> c10531a67792ba33a9aab85f4ac2497511404f1a
 
           </Routes>
         </ThemeProvider>
