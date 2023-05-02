@@ -108,7 +108,7 @@ const PostWidget = ({
   
   return (
     <WidgetWrapper m="1rem 0">
-<Box style={{ display: "flex", alignItems: "center" }}>
+<Box>
 {(isLog && isReg)?(<Friend 
           friendId={postUserId}
           name={name}
