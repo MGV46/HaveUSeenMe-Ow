@@ -8,7 +8,7 @@ import {
   import FlexBetween from "components/FlexBetween";
   import Friend from "components/Friend";
   import User from "components/User";
-  import WidgetWrapper from "components/WidgetWrapper";
+  import WidgetWrapperPetPost from "components/WidgetWrappetPetPost";
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setPost } from "state";
@@ -51,7 +51,7 @@ import {
   }
     
     return (
-      <WidgetWrapper m="1rem 0">
+      <WidgetWrapperPetPost  >
         {isLog?(<Friend
           friendId={postUserId}
           name={name}
@@ -108,7 +108,7 @@ import {
       )}
       
        
-      </WidgetWrapper>
+      </WidgetWrapperPetPost>
     );
   };
   

@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPets } from "state";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import FormPet from "./FormPet";
 const PetListWidget = ({ userId }) => {
 const [isRegister,setRegister] = useState(false);
@@ -13,7 +14,16 @@ const [isRegister,setRegister] = useState(false);
   const { palette } = useTheme();
   const token = useSelector((state) => state.token);
   const pets = useSelector((state) => state.pets);
-
+ 
+  const { userId1 } = useParams();
+  
+const userFriend =useSelector((state)=> state.userFriend)
+const user =useSelector((state)=> state.user)
+console.log(user);
+let isLog=userFriend==userId1;
+console.log(userFriend+"owu");
+console.log(userId1+"dfs");
+console.log(isLog);
   const getPets = async () => {
     const response = await fetch(
       `http://localhost:3001/pets/${userId}/pets`,
@@ -56,6 +66,7 @@ const [isRegister,setRegister] = useState(false);
               <FormPet/>
         
         <Box display="flex" flexDirection="column" gap="1.5rem" top="10px">
+        {isLog &&(
         <Button
             onClick={() => setRegister(isRegister => !isRegister)}
   
@@ -69,6 +80,7 @@ const [isRegister,setRegister] = useState(false);
           >
           <Typography color={"white"}>Cancel</Typography>
           </Button>
+        )}
         </Box>
         
       </WidgetWrapperPetsProfile1>
@@ -98,7 +110,8 @@ const [isRegister,setRegister] = useState(false);
         </Box>
       
         <Box display="flex" flexDirection="column" gap="1.5rem" top="10px">
-        <Button
+          {isLog &&(
+            <Button
             onClick={() => setRegister(isRegister => !isRegister)}
   
   
@@ -111,6 +124,9 @@ const [isRegister,setRegister] = useState(false);
           >
           <Typography color={"white"}>Create</Typography>
           </Button>
+          )
+          }
+        
         </Box>
         
       </WidgetWrapperPetsProfile>

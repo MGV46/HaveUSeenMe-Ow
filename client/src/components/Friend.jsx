@@ -1,7 +1,7 @@
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setFriends } from "state";
+import { setFriends,setUserFriend } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
@@ -56,6 +56,12 @@ const Friend = ({ friendId, name, subtitle, subtitle2, userPicturePath }) => {
           onClick={() => {
             navigate(`/profile/${friendId}`);
             navigate(0);
+            
+              dispatch(
+              setUserFriend({
+                userFriend: friendId,
+                
+              }));
           }}
         >
           <Typography
