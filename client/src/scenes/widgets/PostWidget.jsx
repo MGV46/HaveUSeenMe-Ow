@@ -7,7 +7,7 @@ import {
   DeleteOutlined
 } from "@mui/icons-material";
 import VerifiedIcon from '@mui/icons-material/Verified';
-import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Divider, IconButton, Typography, useTheme, Icon } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import User from "components/User";
@@ -50,7 +50,7 @@ const PostWidget = ({
   let isReg=userId!=postUserId;
   const posts= useSelector((state)=>state.posts);
   let isVideoPath=false,isPicturePath=false,isAudioPath=false,isAttachment=false;
-  
+  const theme = useTheme();
   const isOwner = postUserId === loggedInUserId;//Add isOwner, so the button just appears to the owner 
   const timePosts = format(createdAt);
 
@@ -128,7 +128,25 @@ const PostWidget = ({
         }
 {
   verificate && (
-    <VerifiedIcon color={main}/>  )
+    <Box  style={{ display: "flex", alignItems: "center" }}>
+<Typography style={{ marginRight: "10px" }}
+    color={"#7b12b0"}
+    variant="h9"
+    fontWeight="500"
+    
+    
+  >
+    Post Verified
+  </Typography>
+  
+              <VerifiedIcon color= "purple" fontSize="0.9rem" />
+            
+    </Box>
+    
+     
+        
+      
+     )
 }
 </Box>
       

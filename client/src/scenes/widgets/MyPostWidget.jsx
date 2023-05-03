@@ -49,7 +49,7 @@ const MyPostWidget = ({ picturePath }) => {
     formData.append("userId", _id);
     formData.append("description", post);
     let cant=image.length,i=0,ver=true;
-    if (image) {
+    if (image.length>0) {
      const isVerificade = image.map((image)=>{
       if(predecir(image)){
         i++;
@@ -78,7 +78,7 @@ const MyPostWidget = ({ picturePath }) => {
         ))
       
     }
-    if (video) {
+    if (video.length>0){
       video.map((video)=>(
 
      
@@ -87,7 +87,7 @@ const MyPostWidget = ({ picturePath }) => {
         ))
       
     }
-    if (attachment) {
+    if (attachment.length>0) {
       attachment.map((attachment)=>(
 
      
