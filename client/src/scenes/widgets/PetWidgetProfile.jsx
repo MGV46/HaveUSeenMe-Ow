@@ -24,8 +24,9 @@ const UserWidget = ({ petIds, ppicturePath }) => {
   const main = palette.neutral.main;
   const users = useSelector((state) => state.user);
   const petsId  = useSelector((state)=> state.pet);
+  
 
-  let pName,specie,breed,gender,color,age,picturePath,petId;
+  let pName,specie,breed,gender,color,age,picturePath,petId,userId;
   for(let i=0;i<petsId.length;i++){
     if(petsId[i]!=null){
      petId=petsId[i]._id;
@@ -36,10 +37,11 @@ const UserWidget = ({ petIds, ppicturePath }) => {
      gender=petsId[i].gender;
      color=petsId[i].color;
      age=petsId[i].age;
+     userId=petsId[i].userId;
     }
   }
 
-  
+  const isUser=userId==users._id;
 
   
   //const user= users.find(petId.userId);
@@ -92,7 +94,12 @@ const UserWidget = ({ petIds, ppicturePath }) => {
             
           </Box>
         </FlexBetween>
-        <ManageAccountsOutlined />
+        {isUser &&(
+          <ManageAccountsOutlined />
+        )
+          
+        }
+        
       </FlexBetween>
 
       <Divider />

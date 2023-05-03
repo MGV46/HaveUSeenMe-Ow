@@ -20,10 +20,8 @@ const [isRegister,setRegister] = useState(false);
 const userFriend =useSelector((state)=> state.userFriend)
 const user =useSelector((state)=> state.user)
 console.log(user);
-let isLog=userFriend==userId1;
-console.log(userFriend+"owu");
-console.log(userId1+"dfs");
-console.log(isLog);
+let isLog=userFriend===user._id;
+
   const getPets = async () => {
     const response = await fetch(
       `http://localhost:3001/pets/${userId}/pets`,
