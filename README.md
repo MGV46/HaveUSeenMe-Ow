@@ -64,11 +64,24 @@ metodo de pago si hay tiempo xxdxdxdxdxd
 
 Para la presentacion 12:
 Editar post (KCMagno)
+
+
 Editar usuario(KCMagno)
+
+
 Verificar Gmail(KCMagno)
+
+
 search\/(Din)
+
+
 Actividad(Din)
+
+
 posts mejorados, menu post(BIG C)(INCOMPLETO)
+
+
+
 compartir\(big c)
 
 
