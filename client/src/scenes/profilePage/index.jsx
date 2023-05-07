@@ -56,9 +56,9 @@ let isLog=userLogin._id==userId;
           <PostsWidget userId={userId} isProfile />
         </Box>
         <Box flexBasis="26%">
-      {isLog &&
+      
        <PetListWidget userId={userId} />
-      }
+      
        
         </Box>
         

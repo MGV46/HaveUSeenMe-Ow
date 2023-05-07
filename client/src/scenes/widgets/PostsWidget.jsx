@@ -59,8 +59,14 @@ const PostsWidget = ({ userId, isProfile = false }) => {
           userPicturePath,
           likes,
           comments,
+<<<<<<< HEAD
           createdAt,
+=======
+          verificate,
+  createdAt,
+>>>>>>> cc3c9fedd804d428669df456f10c03d7d78109fe
         }) => (
+          
           <PostWidget
             key={_id}
             postId={_id}
@@ -75,6 +81,10 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             userPicturePath={userPicturePath}
             likes={likes}
             comments={comments}
+<<<<<<< HEAD
+=======
+            verificate={verificate}
+>>>>>>> cc3c9fedd804d428669df456f10c03d7d78109fe
             createdAt={createdAt}
           />
         )

@@ -16,6 +16,11 @@ const ProfilePagePet = () => {
   const petsId  = useSelector((state)=> state.pet);
   const users = useSelector((state) => state.user);
   let Id,picturePath;
+  const { userId1 } = useParams();
+  
+const userLogin =useSelector((state)=> state.userLogin);
+
+let isLog=userLogin._id==userId1;
   
   //const user= users.find(petId.userId);
 for(let i=0;i<petsId.length;i++){
@@ -63,9 +68,9 @@ for(let i=0;i<petsId.length;i++){
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
-          
+          {isLog &&(
           <MyPostPetWidget picturePath={users.picturePath} />
-          <Box m="2rem 0" />
+          )}<Box m="2rem 0" />
           <PostsPetsWidget userId={users._id} isProfile />
         </Box>
       </Box>

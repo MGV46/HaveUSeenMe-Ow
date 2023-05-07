@@ -53,7 +53,7 @@ var modelo = null;
 
       }
 
-      setTimeout(predecir, 6000);
+     
     }
 
 

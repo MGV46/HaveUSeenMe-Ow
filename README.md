@@ -22,11 +22,11 @@ Navbar, los contenedores laterales fijos (dyn y bic c)(RESUELTO)
 
 otro bug, subir posts desde perfil(big c)(RESUELTO)
 
-otro bug, cambiar datos del perfil del usario(al final)
+
 
 orden de los posts\(DIN) (HECHO)
 
-posts mejorados(BIG C)
+
 
 perfil de los perros dentro de los perfiles de usuarios //\(big c)(HECHO)
 
@@ -37,35 +37,76 @@ pag bienvenida(kid carlomagno)(RESUELTO) (HECHO)
 docs que se vean\ (Big c)(RESUELTO)
 
 
-compartir\(big c)
+
 
 
 Follow instead of friends request(DIN) (HECHO)
 
 tiempo "hace cuanto se publico" de los posts(DIN) (HECHO)
 
-search\/(dyn)
+
 
 chat\(Din) (Hecho)
 
-verificacion correos 2A(si hay tiempo)
+
+
+
+
+
+comentarios subir comentarios\(kid carlomagno)(HECHO)
+
+
+
+Despues del 12:
+
+
+IA photos\(dyn)(PERSONA)
+
 
 location /post\(si hay tiempo)
-hay algunas funcione que se deben de agregar como el edit de perfiles, borrado de los mismos, y borrar posts pero piesno que eso se hara despues del 12(big c)
 
-comentarios subir comentarios\(kid carlomagno)
 
-IA photos\(dyn)
 
-Para la presentacion 12\n
-Corregir fotos en los post \n
-Bug de subir algo seleccionado que no esta ahi \n
-Ia Animales \n
-Comentarios Bugs \n
+verificacion correos 2A(si hay tiempo)
 
+
+
+filtro(KCMagno)
 
 
 metodo de pago si hay tiempo xxdxdxdxdxd
+
+
+Para la presentacion 12:
+Editar post (KCMagno)
+
+
+Editar usuario(KCMagno)
+
+
+Verificar Gmail(KCMagno)
+
+
+search\/(Din)
+
+
+Actividad(Din)
+
+
+posts mejorados, menu post(BIG C)(INCOMPLETO)
+
+
+
+compartir\(big c)
+
+
+
+arreglar Bug messenger(Big c)(HECHO)
+
+
+
+
+
 -------------------------------------------------------
 # HaveUSeenMe-Ow
 # HaveUSeenMe-Ow
