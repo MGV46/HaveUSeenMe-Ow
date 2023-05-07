@@ -14,6 +14,7 @@ import WidgetWrapperFriendsChat from "components/WidgetWrapperFriendsChat";
 export default function Messenger() {
   const dispatch = useDispatch();
   const [conversations, setConversations] = useState([]);
+  
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const { user } = useSelector((state) => state);
@@ -24,7 +25,7 @@ export default function Messenger() {
   const { palette } = useTheme();
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const socket = useRef();
-
+//console.log(friends)
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
     socket.current.on("getMessage", (data) => {
@@ -223,6 +224,7 @@ export default function Messenger() {
                   userPicturePath={friend.picturePath}
                   currentId={user._id}
                   setCurrentChat={setCurrentChat}
+                  conversations={conversations}
                 />
               ))}
             </Box>

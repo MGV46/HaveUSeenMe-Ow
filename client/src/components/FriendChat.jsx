@@ -1,17 +1,16 @@
-import { Button,Box, Typography, useTheme } from "@mui/material";
+import { Button, Box, Typography, useTheme } from "@mui/material";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
 
-const Friend = ({ friendId, name, subtitle, userPicturePath, currentId, setCurrentChat }) => {
+const Friend = ({ friendId, name, subtitle, userPicturePath, currentId, setCurrentChat, conversations }) => {
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
   const token = useSelector((state) => state.token);
   //const findChatId = conversations.find((_id) => )
-
 
   const handleClick2 = async () => {
     const formData = new FormData();
@@ -29,6 +28,18 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, currentId, setCurre
 
 
   }
+  const register =()=>{
+    let c=0;
+    let b=true;
+    
+    for(let i=0;i<conversations.length;i++){
+      
+      if(conversations[i].members[1]==friendId){
+        b=false;
+      }
+    }
+    return b;
+  };
   const handleClick = async () => {
     try {
       const res = await axios.get(
@@ -39,7 +50,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, currentId, setCurre
       console.log(err);
     }
   };
-//64500cdae701e0d55607f4aa
+  //64500cdae701e0d55607f4aa
   return (
     <FlexBetween>
       <FlexBetween gap="1rem">
@@ -63,17 +74,32 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, currentId, setCurre
           </Typography>
         </Box>
       </FlexBetween>
-      <Button
-        onClick={() => handleClick2()}
-        sx={{
-          color: "white",
-          backgroundColor: palette.primary.main,
-          borderRadius: "3rem",
-        }}
-      >
-        <Typography color={"white"}>Start</Typography>
-      </Button>
-    </FlexBetween>
+      {register()?(
+        console.log(register()),
+        <Button 
+          onClick={() => handleClick2()}
+          sx={{
+            color: "white",
+            backgroundColor: palette.primary.main,
+            borderRadius: "3rem",
+          }}
+        >
+    
+          <Typography color={"white"}>Start</Typography>
+    
+    
+        </Button>
+      ):(
+          <Typography color={"white"}>Already exits</Typography>
+      )
+
+        
+      }
+      
+        
+      
+      
+    </FlexBetween >
   );
 };
 
