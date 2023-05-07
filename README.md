@@ -54,13 +54,28 @@ chat\(Din) (Hecho)
 
 
 comentarios subir comentarios\(kid carlomagno)(HECHO)
+
+
+
 Despues del 12:
 
+
 IA photos\(dyn)(PERSONA)
+
+
 location /post\(si hay tiempo)
+
+
+
 verificacion correos 2A(si hay tiempo)
+
+
+
 filtro(KCMagno)
+
+
 metodo de pago si hay tiempo xxdxdxdxdxd
+
 
 Para la presentacion 12:
 Editar post (KCMagno)
