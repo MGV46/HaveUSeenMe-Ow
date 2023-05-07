@@ -70,7 +70,10 @@ search\/(Din)
 Actividad(Din)
 posts mejorados, menu post(BIG C)(INCOMPLETO)
 compartir\(big c)
-arreglar Bug messenger(Big c)
+
+
+
+arreglar Bug messenger(Big c)(HECHO)
 
 
 
