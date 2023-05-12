@@ -30,8 +30,7 @@ for(let i=0;i<post.length;i++){
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
-    const data = await response.json();
-    setUser(data);
+   
   };
 
 

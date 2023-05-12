@@ -88,7 +88,7 @@ const MyPostWidget = ({ picturePath }) => {
         }
       }
     }
-    console.log(ima);
+    console.log(image.length+" dfkadsfa");
         
     let cu=ima.length, cant = image.length;
     if (image.length > 0) {
@@ -122,7 +122,12 @@ const MyPostWidget = ({ picturePath }) => {
       const formData = new FormData();
       formData.append("userId", _id);
       formData.append("description", post);
-      formData.append("verificate", ver);
+      if(image.length>0){
+        formData.append("verificate", ver);
+      }else{
+        formData.append("verificate", false);
+      }
+      
 
       image.forEach((file) => {
         const timestamp = Date.now();
@@ -347,13 +352,13 @@ const MyPostWidget = ({ picturePath }) => {
 
       <FlexBetween>
         <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
-          <ImageOutlined sx={{ color: mediumMain }} onClick={() => setImage(null)}/>
+          <ImageOutlined sx={{ color: mediumMain }} onClick={() => setImage([])}/>
           <Typography
             color={mediumMain}
             sx={{ "&:hover": { cursor: "pointer", color: medium } }}
             onClick={() => {
               dispatch(setaiAunt({ aiAunt: true}));
-              setImage(null);
+              setImage([]);
             }
               
               }
@@ -367,7 +372,7 @@ const MyPostWidget = ({ picturePath }) => {
           <Typography
             color={mediumMain}
             sx={{ "&:hover": { cursor: "pointer", color: medium } }}
-            onClick={() => setVideo(null)}
+            onClick={() => setVideo([])}
           >
             Video
           </Typography>
@@ -379,7 +384,7 @@ const MyPostWidget = ({ picturePath }) => {
           <Typography
             color={mediumMain}
             sx={{ "&:hover": { cursor: "pointer", color: medium } }}
-            onClick={() => setAttachment(null)}
+            onClick={() => setAttachment([])}
           >
             Attachment
           </Typography>
@@ -399,7 +404,9 @@ const MyPostWidget = ({ picturePath }) => {
           onClick={()=>{
             band1=true;
           cons=2;
-           handlePost()}}
+          dispatch(setaiAunt({ aiAunt: false }));
+           handlePost();
+          }}
           sx={{
             color: "white",
             backgroundColor: palette.primary.main,
