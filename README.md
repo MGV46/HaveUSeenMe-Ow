@@ -87,10 +87,10 @@ Editar usuario(KCMagno)
 Verificar Gmail(KCMagno)
 
 
-search\/(Din)
+search\/(Din)(Hecho)
 
 
-Actividad(Din)
+Actividad(Din)(Hecho)
 
 
 posts mejorados, menu post(BIG C)(INCOMPLETO)
