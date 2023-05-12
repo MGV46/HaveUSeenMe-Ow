@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   mode: "light",
+  aiAunt: true,
   user: null,
   userLogin: null,
   userFriend:null,
@@ -9,7 +10,9 @@ const initialState = {
   pets:[],
   token: null,
   tokenP:null,
+  friends:[],
   posts: [],
+  ai:[],
   post:null,
   comments:[],
   postsPets:[],
@@ -32,12 +35,17 @@ export const authSlice = createSlice({
       state.pet = action.payload.pet;
       
     },
+    setaiAunt: (state, action) => {
+      state.aiAunt = action.payload.aiAunt;
+      
+    },
     setUserFriend: (state, action) => {
       state.userFriend = action.payload.userFriend;
       
     },
     setUserPost:(state,action)=>{
       state.post =action.payload.post;
+      state.friends =action.payload.friends;
     },
     setLogout: (state) => {
       state.userLogin = null;
@@ -56,6 +64,9 @@ export const authSlice = createSlice({
     },
     setPosts: (state, action) => {
       state.posts = action.payload.posts;
+    },
+    setAi: (state, action) => {
+      state.ai = action.payload.ai;
     },
     setPets: (state, action) => {
       state.pets = action.payload.pets;
@@ -97,6 +108,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setMode, setLogin,setLoginPet,setUserFriend,setUserPost, setLogout,setLogoutPet, setFriends, setPosts,setPets,setPet, setPost,setComment,setComments,setPostsPets,setPostPets } =
+export const { setMode, setLogin,setLoginPet,setaiAunt,setUserFriend,setUserPost, setLogout,setLogoutPet, setFriends, setPosts,setAi,setPets,setPet, setPost,setComment,setComments,setPostsPets,setPostPets } =
   authSlice.actions;
 export default authSlice.reducer;

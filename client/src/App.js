@@ -13,6 +13,7 @@ import Messenger from "scenes/messenger/Messenger";
 import TermsPage from "scenes/TermsPage";
 import HelpPage from "scenes/HelpPage";
 import ContactUsPage from "scenes/ContactUsPage";
+import PostShare from "scenes/PostShare";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -45,7 +46,11 @@ function App() {
             <Route exact path="/terms" element={<TermsPage />} />
             <Route exact path="/help" element={<HelpPage />} />
             <Route exact path="/contact" element={<ContactUsPage />} />
-
+            
+            <Route
+              path="/postShare/:postId"
+              element={isAuth ? <PostShare />: <Navigate to="/" />}
+            />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

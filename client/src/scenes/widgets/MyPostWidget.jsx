@@ -5,6 +5,7 @@ import {
   ImageOutlined,
   MicOutlined,
   MoreHorizOutlined,
+  WindowSharp,
 } from "@mui/icons-material";
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import {
@@ -23,8 +24,9 @@ import UserImage from "components/UserImage";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts } from "state";
+import { setaiAunt,setAi, setPosts } from "state";
 import { predecir } from "./predict";
+import { v4 as uuidv4 } from "uuid";
 const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
   const [isImage, setIsImage] = useState(false);
@@ -34,90 +36,145 @@ const MyPostWidget = ({ picturePath }) => {
   const [isAttachment, setIsAttachment] = useState(false);
   const [attachment, setAttachment] = useState([]);
   const [isAudio, setIsAudio] = useState(false);
-  const [audio, setAudio] = useState([]);
+  const [audio, setAudio] = useState(null);
+  const [audio1, setAudio1] = useState([]);
   const [post, setPost] = useState("");
   const { palette } = useTheme();
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
+  const ima=useSelector((state)=>state.ai);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const mediumMain = palette.neutral.mediumMain;
   const medium = palette.neutral.medium;
+  let modifiedFile;
+
+  let band=useSelector((state)=>state.aiAunt);
+  console.log(band);
   
-
-  const handlePost = async () => {
-    const formData = new FormData();
-    formData.append("userId", _id);
-    formData.append("description", post);
-    let cant=image.length,i=0,ver=true;
-    if (image.length>0) {
-     const isVerificade = image.map((image)=>{
-      if(predecir(image)){
-        i++;
-      }
-      if(i==cant){
-        return true;
-      }else{
-        return false;
-      }
-     }
-      
-     )
-     console.log(isVerificade)
-    for(i=0;i<isVerificade.length;i++){
-      if(!isVerificade[i]){
-       ver=false;
-      }
-    }
-    console.log(ver);
-      formData.append("verificate",ver);
-     
-      image.map((image)=>(
+  let cons =0;
+  let band1=false;
+ console.log(band1+"ban1");
+ const handlePost = () => {
+  (async () => {
+    let c = 0, ver = true;
+    if (band) {
+      console.log("1");
+      const formData1 = new FormData();
+      if (image.length > 0) {
+        cons++;
+        image.forEach((file) => {
+          const timestamp = Date.now();
+          const randomString = uuidv4();
+          modifiedFile = new File([file], `${timestamp}${randomString}${file.name}`, {
+            type: file.type,
+            lastModified: file.lastModified,
+          });
+          formData1.append("picture", modifiedFile);
+          formData1.append("picturePath", modifiedFile.name);
+          
+        });
+       
         
-        formData.append("picture", image),
-        formData.append("picturePath", image.name)
-        ))
-      
+        console.log(cons + " 2");
+        if (band) {
+          const response1 = await fetch(`http://localhost:3001/ai`, {
+            method: "POST",
+            headers: { Authorization: `Bearer ${token}` },
+            body: formData1,
+          });
+          const ai = await response1.json();
+          dispatch(setAi({ ai: ai }));
+          dispatch(setaiAunt({ aiAunt: false }));
+        }
+      }
     }
-    if (video.length>0){
-      video.map((video)=>(
+    console.log(ima);
+        
+    let cu=ima.length, cant = image.length;
+    if (image.length > 0) {
+     console.log(ima[cu-1]);
+      const isVerificade = ima[cu-1].picturePath.map((image)=>{
+        let imagen = new Image(); // Using optional size for image
+        imagen.src =`${image}`;
+        if(predecir(imagen)){
+          c++;
+        }
+        if(c==cant){
+          return true;
+        }else{
+          return false;
+        }
+       }
+        
+       )
+       console.log(isVerificade)
+      for(let i=0;i<isVerificade.length;i++){
+        if(!isVerificade[i]){
+         ver=false;
+        }
+      }
+      console.log(ver);
+    }
 
+    if (cons === 2) {
+      
+
+      const formData = new FormData();
+      formData.append("userId", _id);
+      formData.append("description", post);
+      formData.append("verificate", ver);
+
+      image.forEach((file) => {
+        const timestamp = Date.now();
+        const randomString = uuidv4();
+        const modifiedFile1 = new File([file], `${timestamp}${randomString}${file.name}`, {
+          type: file.type,
+          lastModified: file.lastModified,
+        });
+        formData.append("picture", modifiedFile1);
+        formData.append("picturePath", modifiedFile1.name);
+      });
+      if (video.length > 0) {
+        video.map((video) => (
+          formData.append("picture", video),
+          formData.append("videoPath", video.name)
+        ));
+      }
+      if (attachment.length > 0) {
+        attachment.map((attachment) => (
+          formData.append("picture", attachment),
+          formData.append("attachmentPath", attachment.name)
+        ));
+      }
+
+      const response = await fetch(`http://localhost:3001/posts`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
+      const posts = await response.json();
+      dispatch(
+        setPosts({
+          post: posts.sort((p1, p2) => {
+            return new Date(p2.createdAt) - new Date(p1.createdAt);
+          }),
+        })
+      );
+
+      dispatch(setPosts({ posts }));
+
+      setImage(null);
+      setVideo(null);
+      setAttachment(null);
+      setAudio(null);
      
-        formData.append("picture", video),
-        formData.append("videoPath", video.name)
-        ))
-      
+      setPost("");
+      window.location.reload();
+
     }
-    if (attachment.length>0) {
-      attachment.map((attachment)=>(
-
-     
-        formData.append("picture", attachment),
-        formData.append("attachmentPath", attachment.name)
-        ))
-      
-    }
-    
-
-    const response = await fetch(`http://localhost:3001/posts`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-      body: formData,
-    });
-    const posts = await response.json();
-    dispatch(setPosts({ post: posts.sort((p1, p2) => {
-      return new Date(p2.createdAt) - new Date(p1.createdAt);
-    }) }));
-
-
-    dispatch(setPosts({ posts }));
-    setImage(null);
-    setVideo(null);
-    setAttachment(null);
-    setAudio(null);
-    setPost("");
-  // window.location.reload();
-  };
-
+  })();
+};
+  
   return (
     <WidgetWrapper>
       <FlexBetween gap="1.5rem">
@@ -159,14 +216,19 @@ const MyPostWidget = ({ picturePath }) => {
                   {!image ? (
                     <p>Add Image Here</p>
                   ) : (
-                    image.map((image)=>(
-                      
-                    
-                    <FlexBetween>
-                      <Typography>{image.name}</Typography>
-                      <EditOutlined />
-                    </FlexBetween>
-                    ))
+                   
+                    (cons===0?(
+                      handlePost()
+                    ):(
+                      image.map((image)=>(
+                        <FlexBetween>
+                          <Typography>{image.name}</Typography>
+                          <EditOutlined />
+                        </FlexBetween>
+                        ))
+
+                    )
+                      )
 
                     
                   )}
@@ -289,7 +351,12 @@ const MyPostWidget = ({ picturePath }) => {
           <Typography
             color={mediumMain}
             sx={{ "&:hover": { cursor: "pointer", color: medium } }}
-            onClick={() => setImage(null)}
+            onClick={() => {
+              dispatch(setaiAunt({ aiAunt: true}));
+              setImage(null);
+            }
+              
+              }
           >
             Image
           </Typography>
@@ -329,7 +396,10 @@ const MyPostWidget = ({ picturePath }) => {
 
         <Button
           disabled={!post}
-          onClick={handlePost}
+          onClick={()=>{
+            band1=true;
+          cons=2;
+           handlePost()}}
           sx={{
             color: "white",
             backgroundColor: palette.primary.main,

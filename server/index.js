@@ -19,6 +19,7 @@ import { register} from "./controllers/auth.js";
 import { registerPet } from "./controllers/authP.js";
 import { createPost } from "./controllers/posts.js";
 import { createPostPet } from "./controllers/postsPets.js";
+import { createAi} from "./controllers/ai.js";
 import { createComment} from "./controllers/comments.js";
 import { verifyToken } from "./middleware/auth.js";
 import conversationRoute from "./routes/conversations.js";
@@ -39,12 +40,12 @@ app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
-app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+app.use("/assets", express.static(path.join(__dirname, "../client/public")));
 
 /* FILE STORAGE */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/assets");
+    cb(null, "../client/public");
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
@@ -57,6 +58,7 @@ app.post("/authP/registerPet", upload.single("picture"), registerPet);
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.array("picture"), createPost);
 app.post("/postsPets", verifyToken, upload.array("picture"), createPostPet);
+app.post("/ai", verifyToken, upload.array("picture"), createAi);
 app.post("/comments", verifyToken, upload.single("picture"), createComment);
 app.post("/conversations", verifyToken, upload.single("picture"), createConversation);
 /* ROUTES */

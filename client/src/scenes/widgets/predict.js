@@ -1,20 +1,27 @@
 const tf = require('@tensorflow/tfjs');
 
 var modelo = null;
-
-  (async() => {
-    console.log("Cargando modelo...");
-    modelo = await tf.loadLayersModel("model.json");
-     console.log("Modelo cargado");
-   })();
+  
+(async() => { 
+  console.log("Cargando modelo...");
+  modelo = await tf.loadLayersModel("model.json");
+   console.log("Modelo cargado");
+ })();
+  
 
   export function predecir(file) {
-    
+    console.log(file);
+    //const image = new Image(); // Using optional size for image
+    //image.src =`${file.src}`;
+   //image.src = './preuba2.jpg';
+    //image.width="400px";
+   // image.height="400px";
+//console.log(image);
       if (modelo != null) {
         let otrocanvas = prepararImagen(file);
         let band=false;
         //Hacer la predicciÃ³n
-        console.log(otrocanvas);
+        
         var ctx2 = otrocanvas.getContext("2d");
         var imgData = ctx2.getImageData(0,0, 100, 100);
 
@@ -41,7 +48,9 @@ var modelo = null;
         var resultado = modelo.predict(tensor).dataSync();
 
         var respuesta;
-        if (resultado <= .15 || respuesta > .85) {
+        console.log(resultado[0]);
+        let res=resultado[0];
+        if (res <= .15 || res > .85) {
           respuesta = "Animal";
           band=true
         } else {
@@ -58,22 +67,13 @@ var modelo = null;
 
 
     function prepararImagen(imagen) {
-      console.log(imagen);
-    const image = new Image(); // Using optional size for image
-
-image.src = `${imagen.name}`;
-
-image.id="img";
-var canvas = document.getElementById("img");
-console.log(image);
-console.log(canvas);
-    //var canvas = document.getElementById("img");
+      console.log(imagen)
       // Create a new canvas with the normalized image
-      let canvas1 = document.createElement('canvas');
-      let ctx = canvas1.getContext('2d');
-      canvas1.width = 100;
-      canvas1.height = 100;
-      ctx.drawImage(image, 0, 0, 100, 100);
-
-      return canvas1;
+      let canvas = document.createElement('canvas');
+      let ctx = canvas.getContext('2d');
+      canvas.width = 100;
+      canvas.height = 100;
+      ctx.drawImage(imagen, 0, 0, 100, 100);
+      console.log(canvas)
+      return canvas;
     }
