@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPostsPets } from "state";
 import PostPetWidget from "./PostPetWidget";
 
-const PostsPetsWidget = ({ userId, isProfile = false }) => {
+const PostsPetsWidget = () => {
   const dispatch = useDispatch();
   const postsPets = useSelector((state) => state.postsPets);
   const token = useSelector((state) => state.token);
-  const petsId = useSelector((state) => state.pets);
+  //const petsId = useSelector((state) => state.pets);
   
 const petId  = useSelector((state)=> state.pet);
   let Id;

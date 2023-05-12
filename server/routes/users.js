@@ -4,9 +4,11 @@ import {
   getUserFriends,
   addRemoveFriend,
   getPet,
+  fetchUsersCtrl,
 } from "../controllers/users.js";
 import { verifyToken } from "../middleware/auth.js";
 import User from "../models/User.js";
+import { register } from "../controllers/auth.js";
 
 const router = express.Router();
 
@@ -14,6 +16,7 @@ const router = express.Router();
 router.get("/:id", verifyToken, getUser);
 router.get("/:id/friends", verifyToken, getUserFriends);
 router.get("/:userId/pets", verifyToken, getPet);
+
 /* UPDATE */
 router.patch("/:id/:friendId", verifyToken, addRemoveFriend);
 

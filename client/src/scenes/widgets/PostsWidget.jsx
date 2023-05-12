@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import PostWidget from "./PostWidget";
 
-const PostsWidget = ({ userId, isProfile = false }) => {
+const PostsWidget = ({ userId, isProfile = false, socket, user }) => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
@@ -68,6 +68,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             postId={_id}
             postUserId={userId}
             name={`${firstName} ${lastName}`}
+            name2={firstName}
             description={description}
             location={location}
             picturePath={picturePath}
@@ -79,6 +80,8 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             comments={comments}
             verificate={verificate}
             createdAt={createdAt}
+            socket={socket}
+            user={user}
           />
         )
       )}

@@ -10,7 +10,6 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, currentId, setCurre
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
   const token = useSelector((state) => state.token);
-  //const findChatId = conversations.find((_id) => )
 
   const handleClick2 = async () => {
     const formData = new FormData();
@@ -50,7 +49,6 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, currentId, setCurre
       console.log(err);
     }
   };
-  //64500cdae701e0d55607f4aa
   return (
     <FlexBetween>
       <FlexBetween gap="1rem">
@@ -90,7 +88,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, currentId, setCurre
     
         </Button>
       ):(
-          <Typography color={"white"}>Already exits</Typography>
+          <Typography color={"grey"}>Already exists</Typography>
       )
 
         
