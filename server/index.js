@@ -24,7 +24,7 @@ import { verifyToken } from "./middleware/auth.js";
 import conversationRoute from "./routes/conversations.js";
 import messageRoute from "./routes/messages.js";
 import { createConversation } from "./controllers/conversation.js";
-
+import { fetchUsersCtrl } from "./controllers/users.js";
 
 
 /* CONFIGURATIONS */
@@ -61,7 +61,7 @@ app.post("/comments", verifyToken, upload.single("picture"), createComment);
 app.post("/conversations", verifyToken, upload.single("picture"), createConversation);
 /* ROUTES */
 app.use("/auth", authRoutes);
-
+app.use("/allusers",fetchUsersCtrl);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/postsPets", postPetRoutes);

@@ -26,7 +26,11 @@ import {
   import { useDispatch, useSelector } from "react-redux";
   import { setComments, setComment } from "state";
   import { useNavigate } from "react-router-dom";
-  const MyCommentWidget = ({ picturePath,postId }) => {
+
+
+
+
+  const MyCommentWidget = ({ picturePath,postId, name2, user, socket }) => {
     const dispatch = useDispatch();
     const [isImage, setIsImage] = useState(false);
     const [isVideo, setIsVideo] = useState(false);
@@ -48,6 +52,14 @@ import {
     const main = palette.neutral.main;
    
   
+    const handleNotification = (type) => {
+      socket.emit("sendNotification", {
+        senderName: user.firstName,
+        receiverName: name2,
+        type,
+      });
+    };
+
     const handlePost = async () => {
         console.log(postId)
       const formData = new FormData();
@@ -95,7 +107,7 @@ import {
               borderRadius: "3rem",
             }}
              >{/*/I added an onClick handler to the Button that triggers the addComment function, which submits the comment to the backend and updates the post state. We also set isCommentBoxOpen back to false to close the comment. box */}
-            <Typography color={"white"}>Add</Typography>
+            <Typography color={"white"} onClick={() => handleNotification(2)} >Add</Typography>
           </Button>
           </Box>
          

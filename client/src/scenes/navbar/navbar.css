@@ -1,0 +1,126 @@
+
+
+.icon {
+  cursor: pointer;
+  position: relative;
+}
+
+
+.counter {
+  width: 10px;
+  height: 10px;
+  color: white;
+  background-color: red;
+  border-radius: 50%;
+  padding: 7px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -4px;
+  right: -2px;
+}
+
+.notifications {
+  z-index: 999999;
+  position: absolute;
+  top: 50px;
+  right: -140px;
+  background-color: rgb(234, 234, 234);
+  color: black;
+  font-weight: 300;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.notification {
+  z-index: 999999;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.nButton {
+  z-index: 999999;
+  width: 160px;
+  padding: 10px;
+  margin-top: 5px;
+}
+.nButton2 {
+  width: 210px;
+  height: 60px;
+  padding: 5px;
+}
+.notifications2 {
+  z-index: 999999;
+  position: absolute;
+  top: 58px;
+  left: 240px;
+  background-color: rgb(237, 237, 237);
+  color: black;
+  border-radius: 1rem;
+  font-weight: 300;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.searchInputs {
+  position: absolute;
+  background-color: rgb(237, 237, 237);
+  border-color: black;
+  border-radius: 1rem;
+  top: 23px;
+  width: 230px;
+  height: 35px;
+  padding: 5px;
+  left: 240px;
+}
+.searchIcon{
+  position: absolute;
+  top: 30px;
+  left: 435px;
+}
+.searchInputsMobiile {
+  position: absolute;
+  background-color: rgb(237, 237, 237);
+  border-radius: 1rem;
+  top: 23px;
+  width: 230px;
+  height: 35px;
+  padding: 5px;
+  left: 250px;
+}
+.notifications_2 {
+  z-index: 999999;
+  position: absolute;
+  top: 58px;
+  left: 200px;
+  border-radius: 1rem;
+  background-color: rgb(234, 234, 234);
+  color: black;
+  font-weight: 300;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.nButton3 {
+  width: 210px;
+  height: 60px;
+  padding: 5px;
+}
+.searchInputsMov {
+  position: absolute;
+  background-color: rgb(237, 237, 237);
+  border-radius: 1rem;
+  top: 23px;
+  width: 230px;
+  height: 35px;
+  padding: 5px;
+  left: 200px;
+}
+.searchIconMov{
+  position: absolute;
+  top: 30px;
+  left: 400px;
+}

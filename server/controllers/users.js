@@ -39,6 +39,15 @@ export const getUserFriends = async (req, res) => {
     res.status(404).json({ message: err.message });
   }
 };
+//FetchALLuSERS
+export const fetchUsersCtrl = async(req, res) => {
+  try{
+    const allUsers = await User.find({});
+    res.json(allUsers);
+  }catch(error){
+    res.json(error);
+  }
+}
 
 /* UPDATE */
 export const addRemoveFriend = async (req, res) => {
