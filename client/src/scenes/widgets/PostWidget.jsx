@@ -13,7 +13,7 @@ import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import User from "components/User";
 import WidgetWrapper from "components/WidgetWrapper";
-import { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost, setUserPost } from "state";
 import { useParams } from "react-router-dom";
@@ -41,11 +41,10 @@ const PostWidget = ({
   user,
 }) => {
   const [isComments, setIsComments] = useState(false);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.user._id);
-  
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
   const { palette } = useTheme();
@@ -61,8 +60,16 @@ const PostWidget = ({
   const isOwner = postUserId === loggedInUserId;//Add isOwner, so the button just appears to the owner 
   const timePosts = format(createdAt);
 
-  if(videoPath.length>0){
-    isVideoPath=true;
+  const handleNotification = (type) => {
+    socket.emit("sendNotification", {
+      senderName: user.firstName,
+      receiverName: name2,
+      type,
+    });
+  };
+
+  if (videoPath.length > 0) {
+    isVideoPath = true;
   }
   if (picturePath.length > 0) {
     isPicturePath = true;
@@ -83,19 +90,18 @@ const PostWidget = ({
     const updatedPost = await response.json();
     dispatch(setPost({ post: updatedPost }));
   };
-  const Selection =()=>{
-  let f;
-  const postId1 = posts.map((post) => {
-    if (post._id === postId) {
-      f=post._id;
-      
-      return post;
-    }
-    
-  });
+  const Selection = () => {
+    let f;
+    const postId1 = posts.map((post) => {
+      if (post._id === postId) {
+        f = post._id;
+
+        return post;
+      }
+
+    });
     dispatch(setUserPost({ post: postId1 }));
   }
-   
   const deletePost = async () => {
     try {
       const response = await fetch(`http://localhost:3001/posts/${postId}`, {
@@ -110,11 +116,30 @@ const PostWidget = ({
     } catch (error) {
       console.error(error);
     }
-   
+    window.location.reload();
   };
-  const cantComments=()=>{
+  const copiarLinkUser=()=>{
 
   
+    let url=`http://localhost:3000/profile/${postUserId}`;
+    navigator.clipboard.writeText(url);
+  };
+  const copiarLink=()=>{
+
+
+    let url=`http://localhost:3000/postShare/${postId}`;
+    navigator.clipboard.writeText(url);
+  };
+  const [anchorEl, setAnchorEl] = useState(null);
+
+const handleClick = (event) => {
+  setAnchorEl(event.currentTarget);
+};
+
+const handleClose = () => {
+  setAnchorEl(null);
+};
+
   return (
     <WidgetWrapper m="1rem 0">
       <Box>
@@ -222,27 +247,52 @@ const PostWidget = ({
           </FlexBetween>
 
           <FlexBetween gap="0.3rem">
-            <IconButton onClick={
-             Selection()}>
-              <ChatBubbleOutlineOutlined  onClick={
-               
-               ()=>setIsComments(!isComments) 
-             
-               } 
-               />
+            <IconButton
+            >
+              <ChatBubbleOutlineOutlined onClick={() => {
+                Selection();
+                navigate(`/PostShare/${postId}`);
+                navigate(0);
+              }
+
+
+
+              }
+              />
             </IconButton>
-           
+
           </FlexBetween>
-          {isOwner && (
-            <IconButton onClick={() => deletePost(true)}>
-              <DeleteOutlined />
-            </IconButton>
-          )}
+          
         </FlexBetween>
 
-        <IconButton zIndex="1">
-          <ShareOutlined />
-        </IconButton>
+        <IconButton onClick={handleClick}>
+            <MoreVertOutlined />
+          </IconButton>
+
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            keepMounted
+          >
+            <MenuItem onClick={handleClose}>
+            <IconButton zIndex="1">
+            <ShareOutlined onClick={()=> copiarLink()} />
+            </IconButton>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+            <IconButton zIndex="1">
+            <CoPresentIcon onClick={()=> copiarLinkUser()} />
+            </IconButton>
+            </MenuItem>
+            {isOwner && (
+              <MenuItem onClick={handleClose}>
+                <IconButton onClick={() => deletePost(true)}>
+                <DeleteOutlined />
+              </IconButton>
+              </MenuItem>
+            )}
+          </Menu>
       </FlexBetween>
 
       <Box mt="0.5rem">
@@ -253,7 +303,7 @@ const PostWidget = ({
             <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
               <CommentsWidget commentId={comments} postId={postId} />
               <Divider />
-              <MyCommentWidget picturePath={userLog.picturePath} postId={postId} name2={name2} user={user} socket={socket}/>
+              <MyCommentWidget picturePath={userLog.picturePath} postId={postId} name2={name2} user={user} socket={socket} />
             </Typography>
           </Box>
         }
