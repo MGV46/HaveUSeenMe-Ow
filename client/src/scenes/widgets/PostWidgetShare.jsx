@@ -21,7 +21,8 @@ import {
   import CommentsWidget from "scenes/widgets/CommentsWidget";
   import { format } from "timeago.js";
   import CoPresentIcon from '@mui/icons-material/CoPresent';
-
+  import { predecir } from "./predict";
+  import { Tooltip } from "@mui/material";
   const PostWidgetShare = ({
     postId,
     postUserId,
@@ -159,28 +160,7 @@ import {
           />)
   
           }
-  {
-    verificate && (
-      <Box  style={{ display: "flex", alignItems: "center" }}>
-  <Typography style={{ marginRight: "10px" }}
-      color={"#7b12b0"}
-      variant="h9"
-      fontWeight="500"
-      
-      
-    >
-      Post Verified
-    </Typography>
-    
-                <VerifiedIcon color= "purple" fontSize="0.9rem" />
-              
-      </Box>
-      
-       
-          
-        
-       )
-  }
+
   </Box>
         
         <Typography color={main} sx={{ mt: "1rem" }}>
@@ -201,20 +181,41 @@ import {
             >{attachmentPath}<br></br></a>   
           ))
         )}
+        <Box style={{ position: "relative", display: "inline-block" }} >
         {isPicturePath && (
-          picturePath.map((picture)=>(
-            <img
-            width="100%"
-            height="auto"
-            alt="post"
-            style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-            src={`http://localhost:3001/assets/${picture}`}
-          /> 
-            
+          picturePath.map((picture) => (
+            <div style={{ position: "relative", display: "inline-block" }} >
+              <img
+                width="100%"
+                height="auto"
+                alt="post"
+                style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
+                src={`http://localhost:3001/assets/${picture}`}
+              />
+              { predecir(picture) && (
+                <Box
+                  style={{
+                    position: "absolute",
+                    top: "1rem",
+                    right: "0.7rem",
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer"
+                  }}
+
+                >
+
+                  <Tooltip title="Verified image" placement="right" arrow>
+                    <VerifiedIcon style={{ color: "purple", fontSize: "1.5rem" }} />
+                  </Tooltip>
+
+                </Box>
+              )}
+
+            </div>
           ))
-  
-          
         )}
+      </Box>
        
         
         {isVideoPath && (

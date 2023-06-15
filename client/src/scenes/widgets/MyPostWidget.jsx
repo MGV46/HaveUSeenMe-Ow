@@ -24,7 +24,7 @@ import UserImage from "components/UserImage";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setaiAunt,setAi, setPosts } from "state";
+import { setaiAunt,setAi, setPosts,setMode1 } from "state";
 import { predecir } from "./predict";
 import { v4 as uuidv4 } from "uuid";
 const MyPostWidget = ({ picturePath }) => {
@@ -36,8 +36,7 @@ const MyPostWidget = ({ picturePath }) => {
   const [isAttachment, setIsAttachment] = useState(false);
   const [attachment, setAttachment] = useState([]);
   const [isAudio, setIsAudio] = useState(false);
-  const [audio, setAudio] = useState(null);
-  const [audio1, setAudio1] = useState([]);
+
   const [post, setPost] = useState("");
   const { palette } = useTheme();
   const { _id } = useSelector((state) => state.user);
@@ -46,89 +45,21 @@ const MyPostWidget = ({ picturePath }) => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const mediumMain = palette.neutral.mediumMain;
   const medium = palette.neutral.medium;
-  let modifiedFile;
+  
 
-  let band=useSelector((state)=>state.aiAunt);
-  console.log(band);
+ 
   
   let cons =0;
-  let band1=false;
- console.log(band1+"ban1");
- const handlePost = () => {
-  (async () => {
-    let c = 0, ver = true;
-    if (band) {
-      console.log("1");
-      const formData1 = new FormData();
-      if (image.length > 0) {
-        cons++;
-        image.forEach((file) => {
-          const timestamp = Date.now();
-          const randomString = uuidv4();
-          modifiedFile = new File([file], `${timestamp}${randomString}${file.name}`, {
-            type: file.type,
-            lastModified: file.lastModified,
-          });
-          formData1.append("picture", modifiedFile);
-          formData1.append("picturePath", modifiedFile.name);
-          
-        });
-       
-        
-        console.log(cons + " 2");
-        if (band) {
-          const response1 = await fetch(`http://localhost:3001/ai`, {
-            method: "POST",
-            headers: { Authorization: `Bearer ${token}` },
-            body: formData1,
-          });
-          const ai = await response1.json();
-          dispatch(setAi({ ai: ai }));
-          dispatch(setaiAunt({ aiAunt: false }));
-        }
-      }
-    }
-    console.log(image.length+" dfkadsfa");
-        
-    let cu=ima.length, cant = image.length;
-    if (image.length > 0) {
-     console.log(ima[cu-1]);
-      const isVerificade = ima[cu-1].picturePath.map((image)=>{
-        let imagen = new Image(); // Using optional size for image
-        imagen.src =`${image}`;
-        if(predecir(imagen)){
-          c++;
-        }
-        if(c==cant){
-          return true;
-        }else{
-          return false;
-        }
-       }
-        
-       )
-       console.log(isVerificade)
-      for(let i=0;i<isVerificade.length;i++){
-        if(!isVerificade[i]){
-         ver=false;
-        }
-      }
-      console.log(ver);
-    }
 
-    if (cons === 2) {
-      
+ 
+
+  const handlePost = async () => {
 
       const formData = new FormData();
       formData.append("userId", _id);
       formData.append("description", post);
-      if(image.length>0){
-        formData.append("verificate", ver);
-      }else{
-        formData.append("verificate", false);
-      }
-      
-
+     
+      if (image.length > 0) {
       image.forEach((file) => {
         const timestamp = Date.now();
         const randomString = uuidv4();
@@ -139,6 +70,7 @@ const MyPostWidget = ({ picturePath }) => {
         formData.append("picture", modifiedFile1);
         formData.append("picturePath", modifiedFile1.name);
       });
+    }
       if (video.length > 0) {
         video.map((video) => (
           formData.append("picture", video),
@@ -168,16 +100,15 @@ const MyPostWidget = ({ picturePath }) => {
 
       dispatch(setPosts({ posts }));
 
-      setImage(null);
-      setVideo(null);
-      setAttachment(null);
-      setAudio(null);
+      setImage([]);
+      setVideo([]);
+      setAttachment([]);
+     
      
       setPost("");
-      window.location.reload();
-
-    }
-  })();
+      dispatch(setMode1());
+    
+  
 };
   
   return (
@@ -218,13 +149,10 @@ const MyPostWidget = ({ picturePath }) => {
                   sx={{ "&:hover": { cursor: "pointer" } }}
                 >
                   <input {...getInputProps()} />
-                  {!image ? (
+                  {image.length==0 ? (
                     <p>Add Image Here</p>
                   ) : (
                    
-                    (cons===0?(
-                      handlePost()
-                    ):(
                       image.map((image)=>(
                         <FlexBetween>
                           <Typography>{image.name}</Typography>
@@ -232,15 +160,14 @@ const MyPostWidget = ({ picturePath }) => {
                         </FlexBetween>
                         ))
 
-                    )
-                      )
+                    
 
                     
                   )}
                 </Box>
-                {image && (
+                {image.length>0  && (
                   <IconButton
-                    onClick={() => setImage(null)}
+                    onClick={() => setImage([])}
                     sx={{ width: "15%" }}
                   >
                     <DeleteOutlined />
@@ -275,7 +202,7 @@ const MyPostWidget = ({ picturePath }) => {
                   sx={{ "&:hover": { cursor: "pointer" } }}
                 >
                   <input {...getInputProps()} />
-                  {!video ? (
+                  {video.length==0 ? (
                     <p>Add video Here</p>
                   ) : (
                     video.map((video)=>(
@@ -286,9 +213,9 @@ const MyPostWidget = ({ picturePath }) => {
                     ))
                   )}
                 </Box>
-                {video && (
+                {video.length>0 && (
                   <IconButton
-                    onClick={() => setVideo(null)}
+                    onClick={() => setVideo([])}
                     sx={{ width: "15%" }}
                   >
                     <DeleteOutlined />
@@ -322,7 +249,7 @@ const MyPostWidget = ({ picturePath }) => {
                   sx={{ "&:hover": { cursor: "pointer" } }}
                 >
                   <input {...getInputProps()} />
-                  {!attachment ? (
+                  {attachment.length==0 ? (
                     <p>Add attach Here</p>
                   ) : (
                     attachment.map((attachment)=>(
@@ -333,9 +260,9 @@ const MyPostWidget = ({ picturePath }) => {
                     ))
                   )}
                 </Box>
-                {attachment && (
+                {attachment.length>0 && (
                   <IconButton
-                    onClick={() => setAttachment(null)}
+                    onClick={() => setAttachment([])}
                     sx={{ width: "15%" }}
                   >
                     <DeleteOutlined />
@@ -357,7 +284,7 @@ const MyPostWidget = ({ picturePath }) => {
             color={mediumMain}
             sx={{ "&:hover": { cursor: "pointer", color: medium } }}
             onClick={() => {
-              dispatch(setaiAunt({ aiAunt: true}));
+              
               setImage([]);
             }
               
@@ -368,7 +295,7 @@ const MyPostWidget = ({ picturePath }) => {
         </FlexBetween>
         
         <FlexBetween gap="0.25rem" onClick={() => setIsVideo(!isVideo)}  >
-          <OndemandVideoIcon sx={{ color: mediumMain }} onClick={() => setVideo(null)}/>
+          <OndemandVideoIcon sx={{ color: mediumMain }} onClick={() => setVideo([])}/>
           <Typography
             color={mediumMain}
             sx={{ "&:hover": { cursor: "pointer", color: medium } }}
@@ -380,7 +307,7 @@ const MyPostWidget = ({ picturePath }) => {
         
         
         <FlexBetween gap="0.25rem" onClick={() => setIsAttachment(!isAttachment)}  >
-          <AttachFileOutlined sx={{ color: mediumMain }} onClick={() => setAttachment(null)}/>
+          <AttachFileOutlined sx={{ color: mediumMain }} onClick={() => setAttachment([])}/>
           <Typography
             color={mediumMain}
             sx={{ "&:hover": { cursor: "pointer", color: medium } }}
@@ -402,9 +329,7 @@ const MyPostWidget = ({ picturePath }) => {
         <Button
           disabled={!post}
           onClick={()=>{
-            band1=true;
-          cons=2;
-          dispatch(setaiAunt({ aiAunt: false }));
+           
            handlePost();
           }}
           sx={{

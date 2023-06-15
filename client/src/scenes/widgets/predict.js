@@ -1,24 +1,33 @@
+import { cargarModelo } from './model';
 const tf = require('@tensorflow/tfjs');
 
-var modelo = null;
+let modelo = null;
   
-(async() => { 
-  console.log("Cargando modelo...");
-  modelo = await tf.loadLayersModel("model.json");
-   console.log("Modelo cargado");
- })();
-  
+(async () => {
+  try {
+    console.log("Cargando modelo...");
+   
+    modelo = await tf.loadLayersModel("model.json");
+    console.log("Modelo cargado");
+  } catch (error) {
+    console.log("Cargando modelo...");
+    
+    modelo = await cargarModelo();
+     console.log("Modelo cargado");
+  }
+})();
+
 
   export function predecir(file) {
     console.log(file);
-    //const image = new Image(); // Using optional size for image
-    //image.src =`${file.src}`;
+    const image = new Image(); // Using optional size for image
+    image.src =`${file}`;
    //image.src = './preuba2.jpg';
-    //image.width="400px";
-   // image.height="400px";
-//console.log(image);
+    image.width="400px";
+   image.height="400px";
+console.log(image);
       if (modelo != null) {
-        let otrocanvas = prepararImagen(file);
+        let otrocanvas = prepararImagen(image);
         let band=false;
         //Hacer la predicciÃ³n
         

@@ -5,10 +5,11 @@ import {
   ShareOutlined,
   Verified,
   DeleteOutlined,
-  MoreVertOutlined 
+  MoreVertOutlined,
+  Visibility
 } from "@mui/icons-material";
 import VerifiedIcon from '@mui/icons-material/Verified';
-import { Box, Divider, IconButton,Menu, MenuItem, Typography, useTheme, Icon } from "@mui/material";
+import { Box, Divider, IconButton, Menu, MenuItem, Typography, useTheme, Icon } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import User from "components/User";
@@ -22,6 +23,10 @@ import CommentsWidget from "scenes/widgets/CommentsWidget";
 import { format } from "timeago.js";
 import { useNavigate } from "react-router-dom";
 import CoPresentIcon from '@mui/icons-material/CoPresent';
+import { predecir } from "./predict";
+import { Tooltip } from "@mui/material";
+
+
 const PostWidget = ({
   postId,
   postUserId,
@@ -60,6 +65,7 @@ const PostWidget = ({
   const isOwner = postUserId === loggedInUserId;//Add isOwner, so the button just appears to the owner 
   const timePosts = format(createdAt);
 
+  const comment = useSelector((state) => state.comments);
   const handleNotification = (type) => {
     socket.emit("sendNotification", {
       senderName: user.firstName,
@@ -67,7 +73,8 @@ const PostWidget = ({
       type,
     });
   };
-
+  
+  const [isPicturePath1, setIsPicturePath] = useState(true);
   if (videoPath.length > 0) {
     isVideoPath = true;
   }
@@ -78,6 +85,20 @@ const PostWidget = ({
   if (attachmentPath.length > 0) {
     isAttachment = true;
   }
+  const isPicturePathRef = useRef(false);
+  const temporizadorRef = useRef(null);
+  const tiempoObjetivo = 1;
+  const iniciarTemporizador = () => {
+    temporizadorRef.current = setTimeout(() => {
+      setIsPicturePath(true);
+      reiniciarTemporizador();
+    }, tiempoObjetivo * 1000);
+  };
+
+  const reiniciarTemporizador = () => {
+    clearTimeout(temporizadorRef.current);
+    temporizadorRef.current = null;
+  };
   const patchLike = async () => {
     const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
       method: "PATCH",
@@ -118,30 +139,46 @@ const PostWidget = ({
     }
     window.location.reload();
   };
-  const copiarLinkUser=()=>{
+  const cantComments = () => {
 
-  
-    let url=`http://localhost:3000/profile/${postUserId}`;
+
+    let c = 0;
+    for (let i = 0; i < comment.length; i++) {
+      if (comment[i].postId == postId) {
+        c++;
+      }
+    }
+    return c;
+  };
+  const copiarLinkUser = () => {
+
+
+    let url = `http://localhost:3000/profile/${postUserId}`;
     navigator.clipboard.writeText(url);
   };
-  const copiarLink=()=>{
+  const copiarLink = () => {
 
 
-    let url=`http://localhost:3000/postShare/${postId}`;
+    let url = `http://localhost:3000/postShare/${postId}`;
     navigator.clipboard.writeText(url);
   };
   const [anchorEl, setAnchorEl] = useState(null);
 
-const handleClick = (event) => {
-  setAnchorEl(event.currentTarget);
-};
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-const handleClose = () => {
-  setAnchorEl(null);
-};
-
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  useEffect(() => {
+    if (isPicturePath1) {
+      setIsPicturePath(false);
+    }
+  }, [picturePath]);
   return (
-    <WidgetWrapper m="1rem 0">
+    <WidgetWrapper m="1rem 0" onMouseEnter={iniciarTemporizador}
+      onMouseLeave={reiniciarTemporizador}>
       <Box>
         {(isLog && isReg) ? (<Friend
           friendId={postUserId}
@@ -160,28 +197,7 @@ const handleClose = () => {
         />)
 
         }
-        {
-          verificate && (
-            <Box style={{ display: "flex", alignItems: "center" }}>
-              <Typography style={{ marginRight: "10px" }}
-                color={"#7b12b0"}
-                variant="h9"
-                fontWeight="500"
 
-
-              >
-                Post Verified
-              </Typography>
-
-              <VerifiedIcon color="purple" fontSize="0.9rem" />
-
-            </Box>
-
-
-
-
-          )
-        }
       </Box>
 
       <Typography color={main} sx={{ mt: "1rem" }}>
@@ -202,22 +218,41 @@ const handleClose = () => {
           >{attachmentPath}<br></br></a>
         ))
       )}
-      {isPicturePath && (
-        picturePath.map((picture) => (
-          <img
-            width="100%"
-            height="auto"
-            alt="post"
-            style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-            src={`http://localhost:3001/assets/${picture}`}
-          />
+      <Box style={{ position: "relative", display: "inline-block" }} >
+        {isPicturePath && (
+          picturePath.map((picture) => (
+            <div style={{ position: "relative", display: "inline-block",maxWidth:(picturePath.length>1?("15rem"):("auto")) }} >
+              <img
+                width="100%"
+                height="auto"
+                alt="post"
+                style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
+                src={`http://localhost:3001/assets/${picture}`}
+              />
+              {isPicturePath1 && predecir(picture) && (
+                <Box
+                  style={{
+                    position: "absolute",
+                    top: "1rem",
+                    right: "0.7rem",
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer"
+                  }}
 
-        ))
+                >
 
+                  <Tooltip title="Verified image" placement="right" arrow>
+                    <VerifiedIcon style={{ color: "purple", fontSize: "1.5rem" }} />
+                  </Tooltip>
 
-      )}
+                </Box>
+              )}
 
-
+            </div>
+          ))
+        )}
+      </Box>
       {isVideoPath && (
         videoPath.map((videoPath) => (
           <video
@@ -260,39 +295,42 @@ const handleClose = () => {
               }
               />
             </IconButton>
-
+            <Typography>{cantComments()}</Typography>
           </FlexBetween>
-          
+
         </FlexBetween>
 
         <IconButton onClick={handleClick}>
-            <MoreVertOutlined />
-          </IconButton>
+          <MoreVertOutlined />
+        </IconButton>
 
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-            keepMounted
-          >
-            <MenuItem onClick={handleClose}>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+          keepMounted
+        >
+          <MenuItem onClick={()=> {handleClose();
+          copiarLink();}}>
             <IconButton zIndex="1">
-            <ShareOutlined onClick={()=> copiarLink()} />
+              <ShareOutlined onClick={() => copiarLink()} />
             </IconButton>
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
+          </MenuItem>
+          <MenuItem onClick={()=> {handleClose();
+          copiarLinkUser();}}>
             <IconButton zIndex="1">
-            <CoPresentIcon onClick={()=> copiarLinkUser()} />
+              <CoPresentIcon onClick={() => copiarLinkUser()} />
             </IconButton>
-            </MenuItem>
-            {isOwner && (
-              <MenuItem onClick={handleClose}>
-                <IconButton onClick={() => deletePost(true)}>
+          </MenuItem>
+          {isOwner && (
+            <MenuItem onClick={()=> {handleClose();
+              deletePost(true);}}>
+              <IconButton onClick={() => deletePost(true)}>
                 <DeleteOutlined />
               </IconButton>
-              </MenuItem>
-            )}
-          </Menu>
+            </MenuItem>
+          )}
+        </Menu>
       </FlexBetween>
 
       <Box mt="0.5rem">
